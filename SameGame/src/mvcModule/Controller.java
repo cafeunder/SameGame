@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Random;
 
 import javax.swing.Timer;
 
@@ -43,22 +44,27 @@ public class Controller extends Component implements ActionListener, MouseListen
 		//各モジュールのインスタンス作成
 		mfacade = new MouseFacade();
 		this.view = view;
-		//
 		
 		sceneChange(SceneFactory.SCENE_ID.TITLE);
 		
 		//マウスリスナーの初期化
 		addMouseListener(this);
 		addMouseMotionListener(this);		
-		//
 		
 		timer = new Timer(17,this);	//タイマーセット
 		timer.start();				//タイマースタート
+
+		rand = new Random();
 	}
 	
 	static private MouseFacade mfacade;//マウスファサード
 	static public MouseFacade getMouseFacade(){
 		return mfacade;
+	}
+	
+	static private Random rand;
+	static public int getRand(int max){
+		return rand.nextInt(max);
 	}
 	
 	public void mousePressed(MouseEvent e){
