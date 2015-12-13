@@ -6,7 +6,7 @@ import title.TitleModel;
 import title.TitleViewerComponent;
 
 public class SceneFactory {
-	public enum SCENE_ID{GAME, TITLE, GAMEOVER, GAMECLEAR};
+	public enum SCENE_ID{GAME, TITLE}; //, GAMEOVER, GAMECLEAR};
 	
 	public static class SceneData{
 		public Model model;

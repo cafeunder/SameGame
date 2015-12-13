@@ -10,10 +10,8 @@ public class TitleModel extends Model {
 		super(scfacade);
 	}
 	
-	public void timerUpdate(){};
-	public void mousePressUpdate(MouseFacade mfacade){
-		if(mfacade.getMouseLeftPressCount() == 1) scfacade.sceneChange(SceneFactory.SCENE_ID.GAME,0);
-		if(mfacade.getMouseRightPressCount() == 1) scfacade.sceneChange(SceneFactory.SCENE_ID.GAME,1);		
+	public void update(){
+		MouseFacade mf = Controller.getMouseFacade();
+		if(mf.getMouseLeftPressCount() == 1) scfacade.sceneChange(SceneFactory.SCENE_ID.GAME, 0);
 	};
-	public void mouseMoveUpdate(MouseFacade mfacade){};
 }

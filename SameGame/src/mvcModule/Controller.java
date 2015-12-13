@@ -38,7 +38,6 @@ public class Controller extends Component implements ActionListener, MouseListen
 	private Viewer view;	//ビュー
 	
 	private Timer timer;		//タイマー
-	private MouseFacade mfacade;//マウスファサード
 	
 	public Controller(Viewer view){
 		//各モジュールのインスタンス作成
@@ -57,6 +56,11 @@ public class Controller extends Component implements ActionListener, MouseListen
 		timer.start();				//タイマースタート
 	}
 	
+	static private MouseFacade mfacade;//マウスファサード
+	static public MouseFacade getMouseFacade(){
+		return mfacade;
+	}
+	
 	public void mousePressed(MouseEvent e){
 		mfacade.mousePressed(e); //マウスボタンが押されたとき
 	}
@@ -70,6 +74,7 @@ public class Controller extends Component implements ActionListener, MouseListen
 	public void actionPerformed(ActionEvent e){	//タイマーによって呼び出される更新メソッド
 		mfacade.update();	//マウスファサードの更新
 
+		/*
 		//タイマー呼び出しまでに、マウス入力があったなら、マウス処理
 		if(mfacade.judgeMousePress()) {
 			model.mousePressUpdate(mfacade);
@@ -78,8 +83,9 @@ public class Controller extends Component implements ActionListener, MouseListen
 			model.mouseMoveUpdate(mfacade);
 		}
 		//
+		 */
 		
-		model.timerUpdate();//モデルの更新		
+		model.update();//モデルの更新		
 		view.repaint();	//タイマーによる描画
 	}
 	
