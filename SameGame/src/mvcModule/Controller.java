@@ -73,18 +73,6 @@ public class Controller extends Component implements ActionListener, MouseListen
 
 	public void actionPerformed(ActionEvent e){	//タイマーによって呼び出される更新メソッド
 		mfacade.update();	//マウスファサードの更新
-
-		/*
-		//タイマー呼び出しまでに、マウス入力があったなら、マウス処理
-		if(mfacade.judgeMousePress()) {
-			model.mousePressUpdate(mfacade);
-		}
-		if(mfacade.judgeMouseMoved()) {
-			model.mouseMoveUpdate(mfacade);
-		}
-		//
-		 */
-		
 		model.update();//モデルの更新		
 		view.repaint();	//タイマーによる描画
 	}
