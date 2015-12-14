@@ -20,7 +20,7 @@ public class GameModel extends Model{
 	
 	public void update(){
 		MouseFacade mf = Controller.getMouseFacade();
-		if(mf.getMouseLeftPressCount() == 1) scfacade.sceneChange(SceneFactory.SCENE_ID.TITLE,0);
+//		if(mf.getMouseLeftPressCount() == 1) scfacade.sceneChange(SceneFactory.SCENE_ID.TITLE,0);
 		
 		map.update();
 	}

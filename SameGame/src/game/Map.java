@@ -1,12 +1,36 @@
 package game;
 
 import java.awt.Color;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Queue;
 
 import system.DrawLibrary;
 import system.MouseFacade;
 import mvcModule.Controller;
 
 public class Map {
+	public class Point{
+		public int x;
+		public int y;
+		
+		public Point(int x, int y){
+			this.x = x;
+			this.y = y;
+		}
+		
+		public boolean equal(Point p){
+			return this.x == p.x && this.y == p.y;
+		}
+		public boolean equal(int px, int py){
+			return this.x == px && this.y == py;
+		}
+		
+		public Point copy(){
+			return new Point(this.x, this.y);
+		}
+	}
+	
 	public static final int MAP_WIDTH = 672;
 	public static final int MAP_HEIGHT = 480;
 	public static final int BIG_TIP_SIZE = 32;
@@ -16,10 +40,10 @@ public class Map {
 	private int yNum;
 	private int offSetX;
 	private int offSetY;
-	private int gx;
-	private int gy;
+	private Point mousePoint;
 	private int[][] map;
 	private final int tipSize;
+	private Point[] selectPointGroup;
 	
 	public Map(int tipSize, int typeNum, int offSetX, int offSetY){
 		this.tipSize = tipSize;
@@ -35,16 +59,27 @@ public class Map {
 			}
 		}
 		
-		this.gx = 0;
-		this.gy = 0;
+		this.mousePoint = null;
+		this.selectPointGroup = null;
 	}
 
 	public void update(){
 		MouseFacade mf = Controller.getMouseFacade();
+		
 		int mx = mf.getMouseX();
 		int my = mf.getMouseY();
-		this.gx = (mx-this.offSetX)/this.tipSize;
-		this.gy = (my-this.offSetY)/this.tipSize;
+		if(mx >= this.offSetX && mx < this.offSetX+MAP_WIDTH && my >= this.offSetY && my < this.offSetY+MAP_HEIGHT){
+			int mPx = (mx-this.offSetX)/this.tipSize;
+			int mPy = (my-this.offSetY)/this.tipSize;
+			
+			if(this.mousePoint == null || (mPx != this.mousePoint.x || mPy != this.mousePoint.y)){
+				this.mousePoint = new Point(mPx, mPy);
+				this.selectPointGroup = calcNeighbor(this.mousePoint);
+			}
+		} else {
+			this.mousePoint = null;
+			this.selectPointGroup = null;
+		}
 	}
 	
 	private Color[] DEBUG_COL = {new Color(255,0,0), new Color(0,255,0), new Color(0,0,255), new Color(255,200,0)};
@@ -57,10 +92,56 @@ public class Map {
 			}
 		}
 		if(this.mouseEntered()){
-			dLib.drawRect(this.offSetX + this.gx*this.tipSize, this.offSetY + this.gy*this.tipSize, this.tipSize, this.tipSize, new Color(255,255,255,200), true);
+			if(this.selectPointGroup != null){
+				for(Point p : this.selectPointGroup){
+					dLib.drawRect(this.offSetX + p.x*this.tipSize, this.offSetY + p.y*this.tipSize, this.tipSize, this.tipSize, new Color(255,255,255,200), true);
+				}
+			}
 		}
 		
 		dLib.drawRect(this.offSetX, this.offSetY, MAP_WIDTH, MAP_HEIGHT, new Color(255,255,255), false);
+	}
+
+	public Point[] calcNeighbor(Point op){
+		final int type = this.map[op.y][op.x];
+		if(type == -1){
+			return null;
+		}
+		
+		ArrayList<Point> result = new ArrayList<Point>(0); 
+		Queue<Point> queue = new ArrayDeque<Point>(0);
+		int[][] tempMap = new int[this.yNum][this.xNum];
+		queue.add(op.copy());
+		tempMap[op.y][op.x] = 1;
+		result.add(op.copy());
+		
+		while(true){
+			Point p = queue.poll();
+			if(p == null) break;
+			
+			if(p.x-1 >= 0 && tempMap[p.y][p.x-1] == 0 && this.map[p.y][p.x-1] == type){
+				result.add(new Point(p.x-1, p.y));
+				queue.add(new Point(p.x-1, p.y));
+				tempMap[p.y][p.x-1] = 1;
+			}
+			if(p.x+1 < this.xNum && tempMap[p.y][p.x+1] == 0 && this.map[p.y][p.x+1] == type){
+				result.add(new Point(p.x+1, p.y));
+				queue.add(new Point(p.x+1, p.y));
+				tempMap[p.y][p.x+1] = 1;
+			}
+			if(p.y-1 >= 0 && tempMap[p.y-1][p.x] == 0 && this.map[p.y-1][p.x] == type){
+				result.add(new Point(p.x, p.y-1));
+				queue.add(new Point(p.x, p.y-1));
+				tempMap[p.y-1][p.x] = 1;
+			}
+			if(p.y+1 < this.yNum && tempMap[p.y+1][p.x] == 0 && this.map[p.y+1][p.x] == type){
+				result.add(new Point(p.x, p.y+1));
+				queue.add(new Point(p.x, p.y+1));
+				tempMap[p.y+1][p.x] = 1;
+			}			
+		}
+		
+		return (Point[])result.toArray(new Point[0]);
 	}
 	
 	public boolean mouseEntered(){
