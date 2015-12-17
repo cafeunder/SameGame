@@ -34,8 +34,8 @@ public class Map {
 	
 	public static final int MAP_WIDTH = 672;
 	public static final int MAP_HEIGHT = 480;
-	public static final int BIG_TIP_SIZE = 32;
-	public static final int SMALL_TIP_SIZE = 24;
+	public static final int BIG_BLOCK_SIZE = 32;
+	public static final int SMALL_BLOCK_SIZE = 24;
 	
 	private int init_xNum;
 	private int xNum;
@@ -44,14 +44,16 @@ public class Map {
 	private int offSetY;
 	private Point mousePoint;
 	private int[][] map;
-	private final int tipSize;
+	private final int BlockSize;
 	private Point[] selectPointGroup;
+	private final int startBlockNum;
+	private double compRate;
 	
 	private int[][] indexMap = null;
 	private ArrayList<Point[]> groupAry = null;
 	
 	public Map(int tipSize, int typeNum, int offSetX, int offSetY){
-		this.tipSize = tipSize;
+		this.BlockSize = tipSize;
 		this.xNum = MAP_WIDTH/tipSize;
 		this.yNum = MAP_HEIGHT/tipSize;
 		this.offSetX = offSetX;
@@ -72,6 +74,8 @@ public class Map {
 		
 		this.mousePoint = null;
 		this.selectPointGroup = null;
+		this.startBlockNum = this.xNum*this.yNum;
+		this.compRate = 0.0;
 	}
 
 	public enum State{
@@ -82,6 +86,8 @@ public class Map {
 	public State update(){
 		MouseFacade mf = Controller.getMouseFacade();
 		
+		//pressing mouse button => delete blocks
+		//column check >> row check >> grouping
 		if(mf.getMouseLeftPressCount() == 1 && this.selectPointGroup != null && this.selectPointGroup.length > 1){
 			for(Point p : this.selectPointGroup){
 				this.map[p.x][p.y] = -1;
@@ -148,17 +154,26 @@ public class Map {
 			}
 			this.xNum++;
 			
+			//calc complete rate
+			int blockNum = 0;
+			for(int[] a : this.map) for(int b : a) if(b != -1) blockNum++;
+			
+			this.compRate = 1 - blockNum/this.startBlockNum;
+			
+			//grouping
 			this.grouping();
 			if(this.groupAry.size() == 0){
 				return State.GAMEOVER;
 			}
 		}
 		
+		
+		//moving mouse => select blocks
 		int mx = mf.getMouseX();
 		int my = mf.getMouseY();
 		if(mx >= this.offSetX && mx < this.offSetX+MAP_WIDTH && my >= this.offSetY && my < this.offSetY+MAP_HEIGHT){
-			int mPx = (mx-this.offSetX)/this.tipSize;
-			int mPy = (my-this.offSetY)/this.tipSize;
+			int mPx = (mx-this.offSetX)/this.BlockSize;
+			int mPy = (my-this.offSetY)/this.BlockSize;
 			
 			if(this.mousePoint == null || (mPx != this.mousePoint.x || mPy != this.mousePoint.y) || mf.getMouseLeftPressCount() == 1){
 				this.mousePoint = new Point(mPx, mPy);
@@ -183,7 +198,7 @@ public class Map {
 		for(int x = 0; x < this.xNum; x++){
 			for(int y = 0; y < this.yNum; y++){
 				if(this.map[x][y] != -1){
-					dLib.fillRect(this.offSetX + x*this.tipSize, this.offSetY + y*this.tipSize, this.tipSize, this.tipSize, DEBUG_COL[this.map[x][y]]);
+					dLib.fillRect(this.offSetX + x*this.BlockSize, this.offSetY + y*this.BlockSize, this.BlockSize, this.BlockSize, DEBUG_COL[this.map[x][y]]);
 					//dLib.drawString(this.offSetX + x*this.tipSize, this.offSetY + y*this.tipSize, this.indexMap[x][y]+"", new Color(255,255,255), FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
 				}
 			}
@@ -191,12 +206,12 @@ public class Map {
 		if(this.mouseEntered()){
 			if(this.selectPointGroup != null){
 				for(Point p : this.selectPointGroup){
-					dLib.fillRect(this.offSetX + p.x*this.tipSize, this.offSetY + p.y*this.tipSize, this.tipSize, this.tipSize, new Color(255,255,255,200));
+					dLib.fillRect(this.offSetX + p.x*this.BlockSize, this.offSetY + p.y*this.BlockSize, this.BlockSize, this.BlockSize, new Color(255,255,255,200));
 				}
 			}
 			
 			if(this.mousePoint != null){
-				dLib.drawRect(this.offSetX + this.mousePoint.x*this.tipSize, this.offSetY + this.mousePoint.y*this.tipSize, this.tipSize, this.tipSize, new Color(0,255,255), 4);
+				dLib.drawRect(this.offSetX + this.mousePoint.x*this.BlockSize, this.offSetY + this.mousePoint.y*this.BlockSize, this.BlockSize, this.BlockSize, new Color(0,255,255), 4);
 			}
 		}
 		

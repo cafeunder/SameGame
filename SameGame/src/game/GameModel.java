@@ -14,7 +14,7 @@ public class GameModel extends Model{
 	public GameModel(Controller.SceneChangeFacade scfacade){
 		super(scfacade);
 		
-		map = new Map(Map.BIG_TIP_SIZE, 4, 40, 40);
+		map = new Map(Map.BIG_BLOCK_SIZE, 4, 40, 40);
 //		map = new Map(Map.SMALL_TIP_SIZE, 4);
 	}
 	
