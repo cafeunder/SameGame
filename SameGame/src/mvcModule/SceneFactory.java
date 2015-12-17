@@ -2,11 +2,13 @@ package mvcModule;
 
 import game.GameModel;
 import game.GameViewerComponent;
+import gameOver.GameOverModel;
+import gameOver.GameOverViewerComponent;
 import title.TitleModel;
 import title.TitleViewerComponent;
 
 public class SceneFactory {
-	public enum SCENE_ID{GAME, TITLE}; //, GAMEOVER, GAMECLEAR};
+	public enum SCENE_ID{GAME, TITLE, GAMEOVER}; // GAMECLEAR};
 	
 	public static class SceneData{
 		public Model model;
@@ -28,8 +30,11 @@ public class SceneFactory {
 			TitleModel tmodel = new TitleModel(scfacade);
 			TitleViewerComponent tview = new TitleViewerComponent(scfacade);
 			return new SceneData(tmodel,tview);
+		case GAMEOVER:
+			GameOverModel gomodel = new GameOverModel(scfacade);
+			GameOverViewerComponent goview = new GameOverViewerComponent(scfacade);
+			return new SceneData(gomodel,goview);			
 		}
 		return null;
 	}
-	
 }

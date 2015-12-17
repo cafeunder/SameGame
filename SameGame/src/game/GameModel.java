@@ -19,10 +19,18 @@ public class GameModel extends Model{
 	}
 	
 	public void update(){
-		MouseFacade mf = Controller.getMouseFacade();
+//		MouseFacade mf = Controller.getMouseFacade();
 //		if(mf.getMouseLeftPressCount() == 1) scfacade.sceneChange(SceneFactory.SCENE_ID.TITLE,0);
 		
-		map.update();
+		switch(map.update()){
+		case GAMEOVER:
+			scfacade.sceneChange(SceneFactory.SCENE_ID.GAMEOVER);
+			return;
+		case NEXTSTAGE:
+			break;
+		default:
+			break;
+		}
 	}
 	
 	public void draw(){
