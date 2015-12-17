@@ -1,12 +1,14 @@
 package game;
 
 import java.awt.Color;
+import java.math.BigDecimal;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Queue;
 
 import system.DrawLibrary;
-//import system.FontMgr;
+import system.FontMgr;
 import system.MouseFacade;
 import mvcModule.Controller;
 
@@ -45,6 +47,7 @@ public class Map {
 	private Point mousePoint;
 	private int[][] map;
 	private final int BlockSize;
+	private final int goalCompRate;
 	private Point[] selectPointGroup;
 	private final int startBlockNum;
 	private double compRate;
@@ -52,29 +55,34 @@ public class Map {
 	private int[][] indexMap = null;
 	private ArrayList<Point[]> groupAry = null;
 	
-	public Map(int tipSize, int typeNum, int offSetX, int offSetY){
+	public Map(int tipSize, int typeNum, int goalCompRate, int offSetX, int offSetY){
 		this.BlockSize = tipSize;
 		this.xNum = MAP_WIDTH/tipSize;
 		this.yNum = MAP_HEIGHT/tipSize;
 		this.offSetX = offSetX;
 		this.offSetY = offSetY;
+		this.goalCompRate = goalCompRate;
 		
 		this.init_xNum = this.xNum;
 		
 		// row X column
 		// due to SAMEGAME's board
 		this.map = new int[xNum][yNum];
-		
-		for(int x = 0; x < xNum; x++){
-			for(int y = 0; y < yNum; y++){
-				this.map[x][y] = Controller.getRand(typeNum);
-			}
+		this.startBlockNum = this.xNum*this.yNum;
+
+		ArrayList<Integer> blocks = new ArrayList<Integer>(this.startBlockNum);
+		for(int i = 0; i < this.startBlockNum; i++){
+			blocks.add(i%typeNum);
 		}
+		Collections.shuffle(blocks);
+		for(int i = 0; i < this.startBlockNum; i++){
+			this.map[i%this.xNum][i/this.xNum] = blocks.get(i);
+		}
+		
 		this.grouping();
 		
 		this.mousePoint = null;
 		this.selectPointGroup = null;
-		this.startBlockNum = this.xNum*this.yNum;
 		this.compRate = 0.0;
 	}
 
@@ -156,14 +164,19 @@ public class Map {
 			
 			//calc complete rate
 			int blockNum = 0;
-			for(int[] a : this.map) for(int b : a) if(b != -1) blockNum++;
-			
-			this.compRate = 1 - blockNum/this.startBlockNum;
+			for(int[] a : this.map) if(a != null) for(int b : a) if(b != -1) blockNum++;
+
+			BigDecimal bd = new BigDecimal((1 - (double)blockNum/this.startBlockNum)*100);
+			this.compRate = bd.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
 			
 			//grouping
 			this.grouping();
 			if(this.groupAry.size() == 0){
-				return State.GAMEOVER;
+				if(this.compRate >= this.goalCompRate){
+					return State.NEXTSTAGE;
+				} else {
+					return State.GAMEOVER;
+				}
 			}
 		}
 		
@@ -191,7 +204,7 @@ public class Map {
 		return State.CONTINUE;
 	}
 	
-	private Color[] DEBUG_COL = {new Color(255,0,0), new Color(0,255,0), new Color(0,0,255), new Color(255,200,0)};
+	private Color[] DEBUG_COL = {new Color(255,50,50), new Color(10,220,10), new Color(20,100,255), new Color(255,200,0), new Color(50,245,245), new Color(180,50,255)};
 	public void draw(){
 		DrawLibrary dLib = DrawLibrary.getInstance();
 		
@@ -216,6 +229,7 @@ public class Map {
 		}
 		
 		dLib.drawRect(this.offSetX, this.offSetY, MAP_WIDTH, MAP_HEIGHT, new Color(255,255,255), 1);
+		dLib.drawString(10, 550, this.compRate+"%", new Color(255,255,255), FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
 	}
 
 	public void grouping(){
