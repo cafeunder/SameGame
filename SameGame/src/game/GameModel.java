@@ -27,24 +27,30 @@ public class GameModel extends Model{
 			new LevelData(6, 100),
 	};
 	
-	private Map map;
 	private int level;
 	private LevelData levelData;
 
+	private GameProcess process;
 	
 	public GameModel(Controller.SceneChangeFacade scfacade){
 		super(scfacade);
 
 		this.level = 0;
 		this.levelData = levelDataTable[this.level];
-		map = new Map(Map.BIG_BLOCK_SIZE, this.levelData.blockTypeNum, this.levelData.goalCompRate, 40, 40);
+		Map map = new Map(Map.BIG_BLOCK_SIZE, this.levelData.blockTypeNum, this.levelData.goalCompRate, 40, 40);
+		this.process = new StageStart(map);
 	}
 	
 	public void update(){
+		this.process.update();
 //		MouseFacade mf = Controller.getMouseFacade();
 //		if(mf.getMouseLeftPressCount() == 1) scfacade.sceneChange(SceneFactory.SCENE_ID.TITLE,0);
-		
-		switch(map.update()){
+/*		
+		switch(this.state){
+		case GAMESTART:
+			break;
+		}
+		switch(this.map.update()){
 		case GAMEOVER:
 			scfacade.sceneChange(SceneFactory.SCENE_ID.GAMEOVER);
 			return;
@@ -57,15 +63,16 @@ public class GameModel extends Model{
 		default:
 			break;
 		}
+*/
 	}
 	
 	public void draw(){
 		MouseFacade mf = Controller.getMouseFacade();
 
 		DrawLibrary drawlib = DrawLibrary.getInstance();
-		//drawlib.drawString(200, 200, "ÉQÅ[ÉÄâÊñ ÇæÇÊ", Color.WHITE, FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
 		drawlib.drawString(10, 10, "x:"+mf.getMouseX()+" y:"+mf.getMouseY() , Color.WHITE, FontMgr.getInstance().getFontToId(FontMgr.FontId.INFOMATION), true);
 		
-		map.draw();
+		//this.map.draw();
+		this.process.draw();
 	}
 }

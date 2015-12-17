@@ -1,11 +1,11 @@
 package mvcModule;
 
+import title.TitleModel;
+import title.TitleViewerComponent;
 import game.GameModel;
 import game.GameViewerComponent;
 import gameOver.GameOverModel;
 import gameOver.GameOverViewerComponent;
-import title.TitleModel;
-import title.TitleViewerComponent;
 
 public class SceneFactory {
 	public enum SCENE_ID{GAME, TITLE, GAMEOVER}; // GAMECLEAR};
