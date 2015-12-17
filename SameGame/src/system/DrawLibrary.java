@@ -112,16 +112,35 @@ public class DrawLibrary{
 	* @param width 四角形の横幅
 	* @param height 四角形の縦幅
 	* @param color Colorオブジェクト
-	* @param fill 塗りつぶすかどうか
 	**/
-	public void drawRect(int x, int y, int width, int height, Color color, boolean fill){
+	public void drawRect(int x, int y, int width, int height, Color color, int breadth){
+		g2d.setStroke(new BasicStroke(breadth)); //線の種類を設定
+		g2d.setColor(color);	//引数の色をセット
+		g2d.drawRect(x, y, width, height);
+
+		/*
 		Color temp = g2d.getColor();	//色を記憶
 		g2d.setColor(color);	//引数の色をセット
 		
 		if(fill) g2d.fillRect(x, y, width, height);	//ぬりつぶすならfillRectメソッドを、
 		else g2d.drawRect(x, y, width, height);		//ぬりつぶさないならdrawRectメソッドを呼び出す
 
-		g2d.setColor(temp);		//色をリセット
+		g2d.setColor(temp);		//色をリセット*/
+	}
+	
+	/**
+	* 四角形を塗りつぶして描画するメソッド
+	* @param x 描画x座標
+	* @param y 描画y座標
+	* @param width 四角形の横幅
+	* @param height 四角形の縦幅
+	* @param color Colorオブジェクト
+	**/	
+	public void fillRect(int x, int y, int width, int height, Color color){
+//		Color temp = g2d.getColor();	//色を記憶
+		g2d.setColor(color);	//引数の色をセット
+		g2d.fillRect(x, y, width, height);
+//		g2d.setColor(temp);		//色をリセット
 	}
 	
 	/**

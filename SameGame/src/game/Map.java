@@ -183,24 +183,24 @@ public class Map {
 		for(int x = 0; x < this.xNum; x++){
 			for(int y = 0; y < this.yNum; y++){
 				if(this.map[x][y] != -1){
-					dLib.drawRect(this.offSetX + x*this.tipSize, this.offSetY + y*this.tipSize, this.tipSize, this.tipSize, DEBUG_COL[this.map[x][y]], true);
+					dLib.fillRect(this.offSetX + x*this.tipSize, this.offSetY + y*this.tipSize, this.tipSize, this.tipSize, DEBUG_COL[this.map[x][y]]);
 					//dLib.drawString(this.offSetX + x*this.tipSize, this.offSetY + y*this.tipSize, this.indexMap[x][y]+"", new Color(255,255,255), FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
 				}
 			}
 		}
 		if(this.mouseEntered()){
-			if(this.mousePoint != null){
-				dLib.drawRect(this.offSetX + this.mousePoint.x*this.tipSize, this.offSetY + this.mousePoint.y*this.tipSize, this.tipSize, this.tipSize, new Color(0,255,255), false);
-			}
-			
 			if(this.selectPointGroup != null){
 				for(Point p : this.selectPointGroup){
-					dLib.drawRect(this.offSetX + p.x*this.tipSize, this.offSetY + p.y*this.tipSize, this.tipSize, this.tipSize, new Color(255,255,255,200), true);
+					dLib.fillRect(this.offSetX + p.x*this.tipSize, this.offSetY + p.y*this.tipSize, this.tipSize, this.tipSize, new Color(255,255,255,200));
 				}
+			}
+			
+			if(this.mousePoint != null){
+				dLib.drawRect(this.offSetX + this.mousePoint.x*this.tipSize, this.offSetY + this.mousePoint.y*this.tipSize, this.tipSize, this.tipSize, new Color(0,255,255), 4);
 			}
 		}
 		
-		dLib.drawRect(this.offSetX, this.offSetY, MAP_WIDTH, MAP_HEIGHT, new Color(255,255,255), false);
+		dLib.drawRect(this.offSetX, this.offSetY, MAP_WIDTH, MAP_HEIGHT, new Color(255,255,255), 1);
 	}
 
 	public void grouping(){
