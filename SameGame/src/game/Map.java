@@ -33,17 +33,35 @@ public class Map {
 			return new Point(this.x, this.y);
 		}
 	}
+
+	public static class LevelData{
+		public final int blockTypeNum;
+		public final int goalCompRate;
+		public LevelData(int blockTypeNum, int goalCompRate){
+			this.blockTypeNum = blockTypeNum;
+			this.goalCompRate = goalCompRate;
+		}
+	}
+	public static LevelData[] levelDataTable = {
+			new LevelData(3, 80),
+			new LevelData(4, 80),
+			new LevelData(5, 90),
+			new LevelData(6, 80),
+			new LevelData(6, 90),
+			new LevelData(6, 95),
+	};
 	
-	public static final int MAP_WIDTH = 672;
+	public static final int MAP_WIDTH = 640;
 	public static final int MAP_HEIGHT = 480;
 	public static final int BIG_BLOCK_SIZE = 32;
 	public static final int SMALL_BLOCK_SIZE = 24;
 	
+	public final int level;
 	private int init_xNum;
 	private int xNum;
 	private int yNum;
-	private int offSetX;
-	private int offSetY;
+	public final int OFFSET_X = 40;
+	public final int OFFSET_Y = 40;
 	private Point mousePoint;
 	private int[][] map;
 	private final int BlockSize;
@@ -51,18 +69,16 @@ public class Map {
 	private Point[] selectPointGroup;
 	private final int startBlockNum;
 	private double compRate;
+	private boolean enable = false;
 	
 	private int[][] indexMap = null;
 	private ArrayList<Point[]> groupAry = null;
 	
-	public Map(int tipSize, int typeNum, int goalCompRate, int offSetX, int offSetY){
-		this.BlockSize = tipSize;
-		this.xNum = MAP_WIDTH/tipSize;
-		this.yNum = MAP_HEIGHT/tipSize;
-		this.offSetX = offSetX;
-		this.offSetY = offSetY;
-		this.goalCompRate = goalCompRate;
-		
+	public Map(int level){
+		this.level = level;
+		this.BlockSize = BIG_BLOCK_SIZE;
+		this.xNum = MAP_WIDTH/this.BlockSize;
+		this.yNum = MAP_HEIGHT/this.BlockSize;
 		this.init_xNum = this.xNum;
 		
 		// row X column
@@ -70,9 +86,10 @@ public class Map {
 		this.map = new int[xNum][yNum];
 		this.startBlockNum = this.xNum*this.yNum;
 
+		LevelData levelData = (level >= Map.levelDataTable.length) ? levelDataTable[levelDataTable.length-1] : levelDataTable[this.level];
 		ArrayList<Integer> blocks = new ArrayList<Integer>(this.startBlockNum);
 		for(int i = 0; i < this.startBlockNum; i++){
-			blocks.add(i%typeNum);
+			blocks.add(i%levelData.blockTypeNum);
 		}
 		Collections.shuffle(blocks);
 		for(int i = 0; i < this.startBlockNum; i++){
@@ -83,6 +100,8 @@ public class Map {
 		
 		this.mousePoint = null;
 		this.selectPointGroup = null;
+
+		this.goalCompRate = levelData.goalCompRate;
 		this.compRate = 0.0;
 	}
 
@@ -93,6 +112,7 @@ public class Map {
 	};
 	public State update(){
 		MouseFacade mf = Controller.getMouseFacade();
+		State result = State.CONTINUE;
 		
 		//pressing mouse button => delete blocks
 		//column check >> row check >> grouping
@@ -173,9 +193,9 @@ public class Map {
 			this.grouping();
 			if(this.groupAry.size() == 0){
 				if(this.compRate >= this.goalCompRate){
-					return State.NEXTSTAGE;
+					result = State.NEXTSTAGE;
 				} else {
-					return State.GAMEOVER;
+					result = State.GAMEOVER;
 				}
 			}
 		}
@@ -184,9 +204,9 @@ public class Map {
 		//moving mouse => select blocks
 		int mx = mf.getMouseX();
 		int my = mf.getMouseY();
-		if(mx >= this.offSetX && mx < this.offSetX+MAP_WIDTH && my >= this.offSetY && my < this.offSetY+MAP_HEIGHT){
-			int mPx = (mx-this.offSetX)/this.BlockSize;
-			int mPy = (my-this.offSetY)/this.BlockSize;
+		if(mx >= this.OFFSET_X && mx < this.OFFSET_X+MAP_WIDTH && my >= this.OFFSET_Y && my < this.OFFSET_Y+MAP_HEIGHT){
+			int mPx = (mx-this.OFFSET_X)/this.BlockSize;
+			int mPy = (my-this.OFFSET_Y)/this.BlockSize;
 			
 			if(this.mousePoint == null || (mPx != this.mousePoint.x || mPy != this.mousePoint.y) || mf.getMouseLeftPressCount() == 1){
 				this.mousePoint = new Point(mPx, mPy);
@@ -201,7 +221,7 @@ public class Map {
 			this.selectPointGroup = null;
 		}		
 		
-		return State.CONTINUE;
+		return result;
 	}
 	
 	private Color[] DEBUG_COL = {new Color(255,50,50), new Color(10,220,10), new Color(20,100,255), new Color(255,200,0), new Color(50,245,245), new Color(180,50,255)};
@@ -211,24 +231,28 @@ public class Map {
 		for(int x = 0; x < this.xNum; x++){
 			for(int y = 0; y < this.yNum; y++){
 				if(this.map[x][y] != -1){
-					dLib.fillRect(this.offSetX + x*this.BlockSize, this.offSetY + y*this.BlockSize, this.BlockSize, this.BlockSize, DEBUG_COL[this.map[x][y]]);
+					dLib.fillRect(this.OFFSET_X + x*this.BlockSize, this.OFFSET_Y + y*this.BlockSize, this.BlockSize, this.BlockSize, DEBUG_COL[this.map[x][y]]);
 					//dLib.drawString(this.offSetX + x*this.tipSize, this.offSetY + y*this.tipSize, this.indexMap[x][y]+"", new Color(255,255,255), FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
 				}
 			}
 		}
-		if(this.mouseEntered()){
-			if(this.selectPointGroup != null){
-				for(Point p : this.selectPointGroup){
-					dLib.fillRect(this.offSetX + p.x*this.BlockSize, this.offSetY + p.y*this.BlockSize, this.BlockSize, this.BlockSize, new Color(255,255,255,200));
+		
+		if(this.enable){
+			if(this.mouseEntered()){
+				if(this.selectPointGroup != null){
+					for(Point p : this.selectPointGroup){
+						dLib.fillRect(this.OFFSET_X + p.x*this.BlockSize, this.OFFSET_Y + p.y*this.BlockSize, this.BlockSize, this.BlockSize, new Color(255,255,255,200));
+					}
+				}
+				
+				if(this.mousePoint != null){
+					dLib.drawRect(this.OFFSET_X + this.mousePoint.x*this.BlockSize, this.OFFSET_Y + this.mousePoint.y*this.BlockSize, this.BlockSize, this.BlockSize, new Color(0,255,255), 4);
 				}
 			}
 			
-			if(this.mousePoint != null){
-				dLib.drawRect(this.offSetX + this.mousePoint.x*this.BlockSize, this.offSetY + this.mousePoint.y*this.BlockSize, this.BlockSize, this.BlockSize, new Color(0,255,255), 4);
-			}
 		}
 		
-		dLib.drawRect(this.offSetX, this.offSetY, MAP_WIDTH, MAP_HEIGHT, new Color(255,255,255), 1);
+		dLib.drawRect(this.OFFSET_X, this.OFFSET_Y, MAP_WIDTH, MAP_HEIGHT, new Color(255,255,255), 1);
 		dLib.drawString(10, 550, this.compRate+"%", new Color(255,255,255), FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
 	}
 
@@ -288,7 +312,8 @@ public class Map {
 		}
 	}
 	
-	public Point[] calcNeighbor(Point op){
+	public Point[] calcNeighbor(Point op)
+	{
 		if(op.x < 0 || op.x >= this.xNum || op.y < 0 || op.y >= this.yNum) return null;
 		
 		final int type = this.map[op.x][op.y];
@@ -335,6 +360,10 @@ public class Map {
 	public boolean mouseEntered(){
 		MouseFacade mf = Controller.getMouseFacade();
 		int mx = mf.getMouseX(); int my = mf.getMouseY();
-		return (mx >= this.offSetX && mx < this.offSetX+MAP_WIDTH && my >= this.offSetY && my < this.offSetY+MAP_HEIGHT);
+		return (mx >= this.OFFSET_X && mx < this.OFFSET_X+MAP_WIDTH && my >= this.OFFSET_Y && my < this.OFFSET_Y+MAP_HEIGHT);
+	}
+	
+	public void setEnable(boolean enable){
+		this.enable = enable;
 	}
 }
