@@ -5,13 +5,13 @@ import mvcModule.Viewer;
 import system.ImageMgr;
 import system.SoundMgr;
 
-public class PDTest extends JFrame{
+public class SameGame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	private static final int SIZE_X = 800;	//アプレットのxサイズ
 	private static final int SIZE_Y = 600;	//アプレットのyサイズ
 	
-	public PDTest()
+	public SameGame()
 	{
 		ImageMgr.loadImage(this);	//画像ファイルをロード
 		SoundMgr.loadSound();
@@ -47,6 +47,6 @@ public class PDTest extends JFrame{
 	}
 	
 	public static void main(String[] args){
-		new PDTest();
+		new SameGame();
 	}
 }

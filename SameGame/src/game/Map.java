@@ -9,6 +9,7 @@ import java.util.Queue;
 
 import system.DrawLibrary;
 import system.FontMgr;
+import system.ImageMgr;
 import system.MouseFacade;
 import mvcModule.Controller;
 
@@ -224,14 +225,15 @@ public class Map {
 		return result;
 	}
 	
-	private Color[] DEBUG_COL = {new Color(255,50,50), new Color(10,220,10), new Color(20,100,255), new Color(255,200,0), new Color(50,245,245), new Color(180,50,255)};
+	private ImageMgr.ImgId[] tipImageAry = {ImageMgr.ImgId.TIP_RED, ImageMgr.ImgId.TIP_GREEN, ImageMgr.ImgId.TIP_BLUE, ImageMgr.ImgId.TIP_YELLOW, ImageMgr.ImgId.TIP_CYAN, ImageMgr.ImgId.TIP_VIOLET};
 	public void draw(){
 		DrawLibrary dLib = DrawLibrary.getInstance();
+		ImageMgr imgMgr = ImageMgr.getInstance();
 		
 		for(int x = 0; x < this.xNum; x++){
 			for(int y = 0; y < this.yNum; y++){
 				if(this.map[x][y] != -1){
-					dLib.fillRect(this.OFFSET_X + x*this.BlockSize, this.OFFSET_Y + y*this.BlockSize, this.BlockSize, this.BlockSize, DEBUG_COL[this.map[x][y]]);
+					dLib.drawImage(this.OFFSET_X + x*this.BlockSize, this.OFFSET_Y + y*this.BlockSize, imgMgr.getImageToId(tipImageAry[this.map[x][y]]));
 					//dLib.drawString(this.offSetX + x*this.tipSize, this.offSetY + y*this.tipSize, this.indexMap[x][y]+"", new Color(255,255,255), FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
 				}
 			}
