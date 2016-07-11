@@ -5,7 +5,7 @@ public abstract class GameProcess {
 	public GameProcess(GameModel model){
 		this.model = model;
 	}
-	
+
 	public abstract GameProcess update();
 	public abstract void draw();
 }

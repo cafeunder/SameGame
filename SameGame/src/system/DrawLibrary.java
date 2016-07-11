@@ -1,16 +1,24 @@
 package system;
 
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
+
 import javax.swing.JPanel;
 
 
 /*
-	•`‰æ“®ì‚ğ’ñ‹Ÿ‚·‚éƒ‰ƒCƒuƒ‰ƒŠ
+	æç”»å‹•ä½œã‚’æä¾›ã™ã‚‹ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
  */
 public class DrawLibrary{
-	//ƒVƒ“ƒOƒ‹ƒgƒ“‚Å‹Lq
-	private static DrawLibrary instance = null;	//ƒCƒ“ƒXƒ^ƒ“ƒX
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã§è¨˜è¿°
+	private static DrawLibrary instance = null;	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 	private DrawLibrary(JPanel jp, Graphics2D g2d){
 		this.jp = jp;
 		this.g2d = g2d;
@@ -21,239 +29,239 @@ public class DrawLibrary{
 	public static void init(JPanel jp, Graphics2D g2d){
 		instance = new DrawLibrary(jp, g2d);
 	}
-	
-	private JPanel jp;	//ƒrƒ…[
-	private Graphics2D g2d;	//Graphics2DƒIƒuƒWƒFƒNƒg
+
+	private JPanel jp;	//ãƒ“ãƒ¥ãƒ¼
+	private Graphics2D g2d;	//Graphics2Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 	/**
-	 * ’¼ü‚ğ•`‰æ‚·‚éƒƒ\ƒbƒh
-	 * @param x1 n“_‚ÌxÀ•W
-	 * @param y1 n“_‚ÌyÀ•W
-	 * @param x2 I“_‚ÌxÀ•W
-	 * @param y2 I“_‚ÌyÀ•W
-	 * @param c F
+	 * ç›´ç·šã‚’æç”»ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	 * @param x1 å§‹ç‚¹ã®xåº§æ¨™
+	 * @param y1 å§‹ç‚¹ã®yåº§æ¨™
+	 * @param x2 çµ‚ç‚¹ã®xåº§æ¨™
+	 * @param y2 çµ‚ç‚¹ã®yåº§æ¨™
+	 * @param c è‰²
 	 */
 	public void drawLine(int x1, int y1, int x2, int y2, Color c){
 		g2d.setColor(c);
 		g2d.drawLine(x1, y1, x2, y2);
 	}
 	/**
-	* ‰æ‘œ‚ğ•`‰æ‚·‚éƒƒ\ƒbƒh
-	* @param x •`‰æxÀ•W
-	* @param y •`‰æyÀ•W
-	* @param img ImageƒIƒuƒWƒFƒNƒg
+	* ç”»åƒã‚’æç”»ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	* @param x æç”»xåº§æ¨™
+	* @param y æç”»yåº§æ¨™
+	* @param img Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	**/
 	public void drawImage(int x, int y, Image img){
 		g2d.drawImage(img, x, y, jp);
 	}
 	/**
-	* ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh‚Å‰æ‘œ‚ğ•`‰æ‚·‚éƒƒ\ƒbƒh
-	* @param x •`‰æxÀ•W
-	* @param y •`‰æyÀ•W
-	* @param img ImageƒIƒuƒWƒFƒNƒg
-	* @param param ƒAƒ‹ƒtƒ@ƒpƒ‰ƒ[ƒ^(0.0~1.0)
+	* ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰ã§ç”»åƒã‚’æç”»ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	* @param x æç”»xåº§æ¨™
+	* @param y æç”»yåº§æ¨™
+	* @param img Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	* @param param ã‚¢ãƒ«ãƒ•ã‚¡ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿(0.0~1.0)
 	**/
 	public void drawImageAlphaBlend(int x, int y, Image img, float param){
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, param));	//ƒAƒ‹ƒtƒ@ƒ`ƒƒƒ“ƒlƒ‹‚Ì’l‚ğƒZƒbƒg
-		g2d.drawImage(img, x, y, jp);		//‰æ‘œ‚ğ•`‰æ
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));		//ƒAƒ‹ƒtƒ@ƒ`ƒƒƒ“ƒlƒ‹‚Ì’l‚ğƒŠƒZƒbƒg
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, param));	//ã‚¢ãƒ«ãƒ•ã‚¡ãƒãƒ£ãƒ³ãƒãƒ«ã®å€¤ã‚’ã‚»ãƒƒãƒˆ
+		g2d.drawImage(img, x, y, jp);		//ç”»åƒã‚’æç”»
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));		//ã‚¢ãƒ«ãƒ•ã‚¡ãƒãƒ£ãƒ³ãƒãƒ«ã®å€¤ã‚’ãƒªã‚»ãƒƒãƒˆ
 	}
 
 	/**
-	* ‰~‚ğ•`‰æ‚·‚éƒƒ\ƒbƒh
-	* @param x •`‰æ’†SxÀ•W
-	* @param y •`‰æ’†SyÀ•W
-	* @param radius ”¼Œa
-	* @param color ColorƒIƒuƒWƒFƒNƒg
-	* @param fill “h‚è‚Â‚Ô‚·‚©‚Ç‚¤‚©
+	* å††ã‚’æç”»ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	* @param x æç”»ä¸­å¿ƒxåº§æ¨™
+	* @param y æç”»ä¸­å¿ƒyåº§æ¨™
+	* @param radius åŠå¾„
+	* @param color Colorã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	* @param fill å¡—ã‚Šã¤ã¶ã™ã‹ã©ã†ã‹
 	**/
 	public void drawCircle(int x, int y, int radius, Color color, boolean fill){
 		int rx = x - radius;
 		int ry = y - radius;
-		
-		Color temp = g2d.getColor();	//F‚ğ‹L‰¯
-		g2d.setColor(color);	//ˆø”‚ÌF‚ğƒZƒbƒg
-		
-		if(fill) g2d.fillOval(rx, ry, radius*2, radius*2);	//‚Ê‚è‚Â‚Ô‚·‚È‚çfillRectƒƒ\ƒbƒh‚ğA
-		else g2d.drawOval(rx, ry, radius*2, radius*2);		//‚Ê‚è‚Â‚Ô‚³‚È‚¢‚È‚çdrawRectƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
 
-		g2d.setColor(temp);		//F‚ğƒŠƒZƒbƒg
+		Color temp = g2d.getColor();	//è‰²ã‚’è¨˜æ†¶
+		g2d.setColor(color);	//å¼•æ•°ã®è‰²ã‚’ã‚»ãƒƒãƒˆ
+
+		if(fill) g2d.fillOval(rx, ry, radius*2, radius*2);	//ã¬ã‚Šã¤ã¶ã™ãªã‚‰fillRectãƒ¡ã‚½ãƒƒãƒ‰ã‚’ã€
+		else g2d.drawOval(rx, ry, radius*2, radius*2);		//ã¬ã‚Šã¤ã¶ã•ãªã„ãªã‚‰drawRectãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã™
+
+		g2d.setColor(temp);		//è‰²ã‚’ãƒªã‚»ãƒƒãƒˆ
 	}
-	
+
 	/**
-	* ‰~‚ğƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh‚Å•`‰æ‚·‚éƒƒ\ƒbƒh
-	* @param x •`‰æ’†SxÀ•W
-	* @param y •`‰æ’†SyÀ•W
-	* @param radius ”¼Œa
-	* @param color ColorƒIƒuƒWƒFƒNƒg
-	* @param fill “h‚è‚Â‚Ô‚·‚©‚Ç‚¤‚©
-	* @param param ƒAƒ‹ƒtƒ@ƒpƒ‰ƒ[ƒ^(0.0~1.0)
+	* å††ã‚’ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰ã§æç”»ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	* @param x æç”»ä¸­å¿ƒxåº§æ¨™
+	* @param y æç”»ä¸­å¿ƒyåº§æ¨™
+	* @param radius åŠå¾„
+	* @param color Colorã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	* @param fill å¡—ã‚Šã¤ã¶ã™ã‹ã©ã†ã‹
+	* @param param ã‚¢ãƒ«ãƒ•ã‚¡ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿(0.0~1.0)
 	**/
 	public void drawCircleAlphaBlend(int x, int y, int radius, Color color, boolean fill, float param){
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, param));	//ƒAƒ‹ƒtƒ@ƒ`ƒƒƒ“ƒlƒ‹‚Ì’l‚ğƒZƒbƒg
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, param));	//ã‚¢ãƒ«ãƒ•ã‚¡ãƒãƒ£ãƒ³ãƒãƒ«ã®å€¤ã‚’ã‚»ãƒƒãƒˆ
 
 		int rx = x - radius;
-		int ry = y - radius;                                                                                                                                                                                                                    
-		
-		Color temp = g2d.getColor();	//F‚ğ‹L‰¯
-		g2d.setColor(color);	//ˆø”‚ÌF‚ğƒZƒbƒg
-		
-		if(fill) g2d.fillOval(rx, ry, radius*2, radius*2);	//‚Ê‚è‚Â‚Ô‚·‚È‚çfillRectƒƒ\ƒbƒh‚ğA
-		else g2d.drawOval(rx, ry, radius*2, radius*2);		//‚Ê‚è‚Â‚Ô‚³‚È‚¢‚È‚çdrawRectƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
+		int ry = y - radius;
 
-		g2d.setColor(temp);		//F‚ğƒŠƒZƒbƒg
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));		//ƒAƒ‹ƒtƒ@ƒ`ƒƒƒ“ƒlƒ‹‚Ì’l‚ğƒŠƒZƒbƒg
+		Color temp = g2d.getColor();	//è‰²ã‚’è¨˜æ†¶
+		g2d.setColor(color);	//å¼•æ•°ã®è‰²ã‚’ã‚»ãƒƒãƒˆ
+
+		if(fill) g2d.fillOval(rx, ry, radius*2, radius*2);	//ã¬ã‚Šã¤ã¶ã™ãªã‚‰fillRectãƒ¡ã‚½ãƒƒãƒ‰ã‚’ã€
+		else g2d.drawOval(rx, ry, radius*2, radius*2);		//ã¬ã‚Šã¤ã¶ã•ãªã„ãªã‚‰drawRectãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã™
+
+		g2d.setColor(temp);		//è‰²ã‚’ãƒªã‚»ãƒƒãƒˆ
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));		//ã‚¢ãƒ«ãƒ•ã‚¡ãƒãƒ£ãƒ³ãƒãƒ«ã®å€¤ã‚’ãƒªã‚»ãƒƒãƒˆ
 	}
-	
+
 	/**
-	* lŠpŒ`‚ğ•`‰æ‚·‚éƒƒ\ƒbƒh
-	* @param x •`‰æxÀ•W
-	* @param y •`‰æyÀ•W
-	* @param width lŠpŒ`‚Ì‰¡•
-	* @param height lŠpŒ`‚Ìc•
-	* @param color ColorƒIƒuƒWƒFƒNƒg
+	* å››è§’å½¢ã‚’æç”»ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	* @param x æç”»xåº§æ¨™
+	* @param y æç”»yåº§æ¨™
+	* @param width å››è§’å½¢ã®æ¨ªå¹…
+	* @param height å››è§’å½¢ã®ç¸¦å¹…
+	* @param color Colorã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	**/
 	public void drawRect(int x, int y, int width, int height, Color color, int breadth){
-		g2d.setStroke(new BasicStroke(breadth)); //ü‚Ìí—Ş‚ğİ’è
-		g2d.setColor(color);	//ˆø”‚ÌF‚ğƒZƒbƒg
+		g2d.setStroke(new BasicStroke(breadth)); //ç·šã®ç¨®é¡ã‚’è¨­å®š
+		g2d.setColor(color);	//å¼•æ•°ã®è‰²ã‚’ã‚»ãƒƒãƒˆ
 		g2d.drawRect(x, y, width, height);
 
 		/*
-		Color temp = g2d.getColor();	//F‚ğ‹L‰¯
-		g2d.setColor(color);	//ˆø”‚ÌF‚ğƒZƒbƒg
-		
-		if(fill) g2d.fillRect(x, y, width, height);	//‚Ê‚è‚Â‚Ô‚·‚È‚çfillRectƒƒ\ƒbƒh‚ğA
-		else g2d.drawRect(x, y, width, height);		//‚Ê‚è‚Â‚Ô‚³‚È‚¢‚È‚çdrawRectƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
+		Color temp = g2d.getColor();	//è‰²ã‚’è¨˜æ†¶
+		g2d.setColor(color);	//å¼•æ•°ã®è‰²ã‚’ã‚»ãƒƒãƒˆ
 
-		g2d.setColor(temp);		//F‚ğƒŠƒZƒbƒg*/
+		if(fill) g2d.fillRect(x, y, width, height);	//ã¬ã‚Šã¤ã¶ã™ãªã‚‰fillRectãƒ¡ã‚½ãƒƒãƒ‰ã‚’ã€
+		else g2d.drawRect(x, y, width, height);		//ã¬ã‚Šã¤ã¶ã•ãªã„ãªã‚‰drawRectãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã™
+
+		g2d.setColor(temp);		//è‰²ã‚’ãƒªã‚»ãƒƒãƒˆ*/
 	}
-	
+
 	/**
-	* lŠpŒ`‚ğ“h‚è‚Â‚Ô‚µ‚Ä•`‰æ‚·‚éƒƒ\ƒbƒh
-	* @param x •`‰æxÀ•W
-	* @param y •`‰æyÀ•W
-	* @param width lŠpŒ`‚Ì‰¡•
-	* @param height lŠpŒ`‚Ìc•
-	* @param color ColorƒIƒuƒWƒFƒNƒg
-	**/	
+	* å››è§’å½¢ã‚’å¡—ã‚Šã¤ã¶ã—ã¦æç”»ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	* @param x æç”»xåº§æ¨™
+	* @param y æç”»yåº§æ¨™
+	* @param width å››è§’å½¢ã®æ¨ªå¹…
+	* @param height å››è§’å½¢ã®ç¸¦å¹…
+	* @param color Colorã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	**/
 	public void fillRect(int x, int y, int width, int height, Color color){
-//		Color temp = g2d.getColor();	//F‚ğ‹L‰¯
-		g2d.setColor(color);	//ˆø”‚ÌF‚ğƒZƒbƒg
+//		Color temp = g2d.getColor();	//è‰²ã‚’è¨˜æ†¶
+		g2d.setColor(color);	//å¼•æ•°ã®è‰²ã‚’ã‚»ãƒƒãƒˆ
 		g2d.fillRect(x, y, width, height);
-//		g2d.setColor(temp);		//F‚ğƒŠƒZƒbƒg
+//		g2d.setColor(temp);		//è‰²ã‚’ãƒªã‚»ãƒƒãƒˆ
 	}
-	
+
 	/**
-	* ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh‚ÅlŠpŒ`‚ğ•`‰æ‚·‚éƒƒ\ƒbƒh
-	* @param x •`‰æxÀ•W
-	* @param y •`‰æyÀ•W
-	* @param width lŠpŒ`‚Ì‰¡•
-	* @param height lŠpŒ`‚Ìc•
-	* @param fill “h‚è‚Â‚Ô‚·‚©‚Ç‚¤‚©
-	* @param param ƒAƒ‹ƒtƒ@ƒpƒ‰ƒ[ƒ^(0.0~1.0)
+	* ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰ã§å››è§’å½¢ã‚’æç”»ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	* @param x æç”»xåº§æ¨™
+	* @param y æç”»yåº§æ¨™
+	* @param width å››è§’å½¢ã®æ¨ªå¹…
+	* @param height å››è§’å½¢ã®ç¸¦å¹…
+	* @param fill å¡—ã‚Šã¤ã¶ã™ã‹ã©ã†ã‹
+	* @param param ã‚¢ãƒ«ãƒ•ã‚¡ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿(0.0~1.0)
 	**/
 	public void drawRectAlphaBlend(int x, int y, int width, int height, Color color, boolean fill, float param){
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, param));	//ƒAƒ‹ƒtƒ@ƒ`ƒƒƒ“ƒlƒ‹‚Ì’l‚ğƒZƒbƒg
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, param));	//ã‚¢ãƒ«ãƒ•ã‚¡ãƒãƒ£ãƒ³ãƒãƒ«ã®å€¤ã‚’ã‚»ãƒƒãƒˆ
 
-		Color temp = g2d.getColor();	//F‚ğ‹L‰¯
-		g2d.setColor(color);	//ˆø”‚ÌF‚ğƒZƒbƒg
-		
-		if(fill) g2d.fillRect(x, y, width, height);	//‚Ê‚è‚Â‚Ô‚·‚È‚çfillRectƒƒ\ƒbƒh‚ğA
-		else g2d.drawRect(x, y, width, height);		//‚Ê‚è‚Â‚Ô‚³‚È‚¢‚È‚çdrawRectƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
+		Color temp = g2d.getColor();	//è‰²ã‚’è¨˜æ†¶
+		g2d.setColor(color);	//å¼•æ•°ã®è‰²ã‚’ã‚»ãƒƒãƒˆ
 
-		g2d.setColor(temp);		//F‚ğƒŠƒZƒbƒg
-		
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));		//ƒAƒ‹ƒtƒ@ƒ`ƒƒƒ“ƒlƒ‹‚Ì’l‚ğƒŠƒZƒbƒg
+		if(fill) g2d.fillRect(x, y, width, height);	//ã¬ã‚Šã¤ã¶ã™ãªã‚‰fillRectãƒ¡ã‚½ãƒƒãƒ‰ã‚’ã€
+		else g2d.drawRect(x, y, width, height);		//ã¬ã‚Šã¤ã¶ã•ãªã„ãªã‚‰drawRectãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã™
+
+		g2d.setColor(temp);		//è‰²ã‚’ãƒªã‚»ãƒƒãƒˆ
+
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));		//ã‚¢ãƒ«ãƒ•ã‚¡ãƒãƒ£ãƒ³ãƒãƒ«ã®å€¤ã‚’ãƒªã‚»ãƒƒãƒˆ
 	}
-	
+
 	/**
-	* ‰æ‘œ‚ğ‰ñ“]‚µ‚Ä•`‰æ‚·‚éƒƒ\ƒbƒh
-	* @param x •`‰æ’†SxÀ•Wi‰ñ“]‚Ìx“_j
-	* @param y •`‰æ’†SyÀ•Wi‰ñ“]‚Ìx“_j
-	* @param img ImageƒIƒuƒWƒFƒNƒg
-	* @param angle ‰ñ“]ƒ‰ƒWƒAƒ“Šp
+	* ç”»åƒã‚’å›è»¢ã—ã¦æç”»ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	* @param x æç”»ä¸­å¿ƒxåº§æ¨™ï¼ˆå›è»¢ã®æ”¯ç‚¹ï¼‰
+	* @param y æç”»ä¸­å¿ƒyåº§æ¨™ï¼ˆå›è»¢ã®æ”¯ç‚¹ï¼‰
+	* @param img Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	* @param angle å›è»¢ãƒ©ã‚¸ã‚¢ãƒ³è§’
 	**/
 	public void drawImageRotate(int x, int y, Image img, float angle, boolean inter){
 		if(inter) g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-		g2d.rotate(angle, x, y);	//À•W‚ğ‰ñ“]
-		g2d.drawImage(img, x-img.getWidth(jp)/2, y-img.getHeight(jp)/2, jp);	//‰æ‘œ‚ğ•`‰æ
+		g2d.rotate(angle, x, y);	//åº§æ¨™ã‚’å›è»¢
+		g2d.drawImage(img, x-img.getWidth(jp)/2, y-img.getHeight(jp)/2, jp);	//ç”»åƒã‚’æç”»
 		g2d.setTransform(new AffineTransform());
-		
+
 		if(inter) g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
 	}
-	
+
 	/**
-	* ‰æ‘œ‚ğŠgk‚µ‚Ä•`‰æ‚·‚éƒƒ\ƒbƒh
-	* @param x •`‰æ’†SxÀ•WiŠgk‚Ìx“_j
-	* @param y •`‰æ’†SyÀ•WiŠgk‚Ìx“_j
-	* @param img ImageƒIƒuƒWƒFƒNƒg
-	* @param rate Šgk”{—¦
-	* @param inter •âŠÔ‚ğs‚¤‚©‚Ç‚¤‚©
+	* ç”»åƒã‚’æ‹¡ç¸®ã—ã¦æç”»ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	* @param x æç”»ä¸­å¿ƒxåº§æ¨™ï¼ˆæ‹¡ç¸®ã®æ”¯ç‚¹ï¼‰
+	* @param y æç”»ä¸­å¿ƒyåº§æ¨™ï¼ˆæ‹¡ç¸®ã®æ”¯ç‚¹ï¼‰
+	* @param img Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	* @param rate æ‹¡ç¸®å€ç‡
+	* @param inter è£œé–“ã‚’è¡Œã†ã‹ã©ã†ã‹
 	**/
 	public void drawImageExtend(int x, int y, Image img, float rate, boolean inter){
 		int ex_w = (int)(img.getWidth(jp)*rate);
 		int ex_h = (int)(img.getHeight(jp)*rate);
-		
+
 		if(inter) g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			//ƒoƒCƒŠƒjƒA•âŠÔ‚Å•`‰æ
-		g2d.drawImage(img, x-ex_w/2, y-ex_h/2, ex_w, ex_h, jp);	//‰æ‘œ‚ğŠg‘å•`‰æ
+			//ãƒã‚¤ãƒªãƒ‹ã‚¢è£œé–“ã§æç”»
+		g2d.drawImage(img, x-ex_w/2, y-ex_h/2, ex_w, ex_h, jp);	//ç”»åƒã‚’æ‹¡å¤§æç”»
 		if(inter) g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-			//ƒjƒAƒŒƒXƒg•âŠÔ‚É–ß‚·
-		
+			//ãƒ‹ã‚¢ãƒ¬ã‚¹ãƒˆè£œé–“ã«æˆ»ã™
+
 	}
 
 	/**
-	* ‰æ‘œ‚ğŠgkE‰ñ“]‚µ‚Ä•`‰æ‚·‚éƒƒ\ƒbƒh
-	* @param x •`‰æ’†SxÀ•WiŠgkE‰ñ“]‚Ìx“_j
-	* @param y •`‰æ’†SyÀ•WiŠgkE‰ñ“]‚Ìx“_j
-	* @param img ImageƒIƒuƒWƒFƒNƒg
-	* @param angle ‰ñ“]ƒ‰ƒWƒAƒ“Šp
-	* @param rate Šgk”{—¦
-	* @param inter •âŠÔ‚ğs‚¤‚©‚Ç‚¤‚©
+	* ç”»åƒã‚’æ‹¡ç¸®ãƒ»å›è»¢ã—ã¦æç”»ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	* @param x æç”»ä¸­å¿ƒxåº§æ¨™ï¼ˆæ‹¡ç¸®ãƒ»å›è»¢ã®æ”¯ç‚¹ï¼‰
+	* @param y æç”»ä¸­å¿ƒyåº§æ¨™ï¼ˆæ‹¡ç¸®ãƒ»å›è»¢ã®æ”¯ç‚¹ï¼‰
+	* @param img Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	* @param angle å›è»¢ãƒ©ã‚¸ã‚¢ãƒ³è§’
+	* @param rate æ‹¡ç¸®å€ç‡
+	* @param inter è£œé–“ã‚’è¡Œã†ã‹ã©ã†ã‹
 	**/
 	public void drawImageRotateExtend(int x, int y, Image img, float angle, float rate, boolean inter){
 		int ex_w = (int)(img.getWidth(jp)*rate);
 		int ex_h = (int)(img.getHeight(jp)*rate);
-		
+
 		if(inter) g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			//ƒoƒCƒŠƒjƒA•âŠÔ‚Å•`‰æ
-		g2d.rotate(angle, x, y);	//À•W‚ğ‰ñ“]
-		g2d.drawImage(img, x-ex_w/2, y-ex_h/2, ex_w, ex_h, jp);	//‰æ‘œ‚ğŠg‘å•`‰æ
+			//ãƒã‚¤ãƒªãƒ‹ã‚¢è£œé–“ã§æç”»
+		g2d.rotate(angle, x, y);	//åº§æ¨™ã‚’å›è»¢
+		g2d.drawImage(img, x-ex_w/2, y-ex_h/2, ex_w, ex_h, jp);	//ç”»åƒã‚’æ‹¡å¤§æç”»
 		g2d.setTransform(new AffineTransform());
 
 		if(inter) g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-			//ƒjƒAƒŒƒXƒg•âŠÔ‚É–ß‚·		
+			//ãƒ‹ã‚¢ãƒ¬ã‚¹ãƒˆè£œé–“ã«æˆ»ã™
 	}
-	
+
 	/**
-	 * •¶š—ñ‚ğ•`‰æ‚·‚éƒƒ\ƒbƒh
-	 * @param x •`‰æxÀ•W
-	 * @param y •`‰æyÀ•W
-	 * @param str •¶š—ñ
-	 * @param color F
-	 * @param font ƒtƒHƒ“ƒgƒf[ƒ^
-	 * @param antialias ƒAƒ“ƒ`ƒGƒCƒŠƒAƒX
+	 * æ–‡å­—åˆ—ã‚’æç”»ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	 * @param x æç”»xåº§æ¨™
+	 * @param y æç”»yåº§æ¨™
+	 * @param str æ–‡å­—åˆ—
+	 * @param color è‰²
+	 * @param font ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿
+	 * @param antialias ã‚¢ãƒ³ãƒã‚¨ã‚¤ãƒªã‚¢ã‚¹
 	 */
 	public void drawString(int x, int y, String str, Color color, Font font, boolean antialias){
-		g2d.setColor(color);	//F‚ğƒZƒbƒg
-		g2d.setFont(font);		//ƒtƒHƒ“ƒg‚ğƒZƒbƒg
-		FontMetrics fm = g2d.getFontMetrics();	//ƒtƒHƒ“ƒgƒƒgƒŠƒNƒX‚ğó‚¯æ‚é
-		y+=fm.getAscent();	//ƒAƒZƒ“ƒgƒTƒCƒY•ª‰º‚Ö
-		
+		g2d.setColor(color);	//è‰²ã‚’ã‚»ãƒƒãƒˆ
+		g2d.setFont(font);		//ãƒ•ã‚©ãƒ³ãƒˆã‚’ã‚»ãƒƒãƒˆ
+		FontMetrics fm = g2d.getFontMetrics();	//ãƒ•ã‚©ãƒ³ãƒˆãƒ¡ãƒˆãƒªã‚¯ã‚¹ã‚’å—ã‘å–ã‚‹
+		y+=fm.getAscent();	//ã‚¢ã‚»ãƒ³ãƒˆã‚µã‚¤ã‚ºåˆ†ä¸‹ã¸
+
 		if(antialias) g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2d.drawString(str, x, y);
 		if(antialias) g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 	}
-	
+
 	/**
-	* ƒtƒHƒ“ƒg‚ÌƒƒgƒŠƒNƒX‚ğ•Ô‚·ƒƒ\ƒbƒh
-	* @param font FontƒIƒuƒWƒFƒNƒg
-	**/	
+	* ãƒ•ã‚©ãƒ³ãƒˆã®ãƒ¡ãƒˆãƒªã‚¯ã‚¹ã‚’è¿”ã™ãƒ¡ã‚½ãƒƒãƒ‰
+	* @param font Fontã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	**/
 	public FontMetrics getFontMetrics(Font font){
 		return g2d.getFontMetrics(font);
 	}
-	
+
 	public void SetPosition(int x, int y){
 		g2d.translate(x , y);
 	}

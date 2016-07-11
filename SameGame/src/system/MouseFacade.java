@@ -1,18 +1,18 @@
 package system;
-import java.awt.*;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 public class MouseFacade {
-	private Point set_point;		//ƒ}ƒEƒXƒŠƒXƒi[‚©‚ç—^‚¦‚ç‚ê‚½À•W
-	private Point update_point;		//ƒ^ƒCƒ}[ŒÄ‚Ño‚µ‚ÉXV‚µ‚½À•W
-	private boolean left_press;			//ƒ^ƒCƒ}[ŒÄ‚Ño‚µ‚Ü‚Å‚É¶ƒNƒŠƒbƒN‚³‚ê‚½‚©‚Ç‚¤‚©
-	private boolean right_press;		//ƒ^ƒCƒ}[ŒÄ‚Ño‚µ‚Ü‚Å‚É‰EƒNƒŠƒbƒN‚³‚ê‚½‚©‚Ç‚¤‚©
-	private boolean moved;				//ƒ^ƒCƒ}[ŒÄ‚Ño‚µ‚Ü‚Å‚Éƒ}ƒEƒX‚ª“®‚¢‚½‚©‚Ç‚¤‚©
-	private int left_count;				//¶‚ª‰Ÿ‚³‚ê‚Ä‚¢‚éƒtƒŒ[ƒ€”
-	private int right_count;			//‰E‚ª‰Ÿ‚³‚ê‚Ä‚¢‚éƒtƒŒ[ƒ€”
-	
+	private Point set_point;		//ãƒã‚¦ã‚¹ãƒªã‚¹ãƒŠãƒ¼ã‹ã‚‰ä¸ãˆã‚‰ã‚ŒãŸåº§æ¨™
+	private Point update_point;		//ã‚¿ã‚¤ãƒãƒ¼å‘¼ã³å‡ºã—æ™‚ã«æ›´æ–°ã—ãŸåº§æ¨™
+	private boolean left_press;			//ã‚¿ã‚¤ãƒãƒ¼å‘¼ã³å‡ºã—ã¾ã§ã«å·¦ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸã‹ã©ã†ã‹
+	private boolean right_press;		//ã‚¿ã‚¤ãƒãƒ¼å‘¼ã³å‡ºã—ã¾ã§ã«å³ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸã‹ã©ã†ã‹
+	private boolean moved;				//ã‚¿ã‚¤ãƒãƒ¼å‘¼ã³å‡ºã—ã¾ã§ã«ãƒã‚¦ã‚¹ãŒå‹•ã„ãŸã‹ã©ã†ã‹
+	private int left_count;				//å·¦ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
+	private int right_count;			//å³ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
+
 	public MouseFacade(){
-		//Še•Ï”‚Ì‰Šú‰»
+		//å„å¤‰æ•°ã®åˆæœŸåŒ–
 		set_point = new Point(0,0);
 		update_point = new Point(0,0);
 		left_press = false;
@@ -22,22 +22,22 @@ public class MouseFacade {
 		moved = false;
 		//
 	}
-	
+
 	/**
-	* ƒ^ƒCƒ}[‚ÉŒÄ‚Ño‚³‚ê‚éXVƒƒ\ƒbƒh
+	* ã‚¿ã‚¤ãƒãƒ¼ã«å‘¼ã³å‡ºã•ã‚Œã‚‹æ›´æ–°ãƒ¡ã‚½ãƒƒãƒ‰
 	**/
 	public void update(){
-		if(left_press == true) left_count++;	//‚»‚ÌƒtƒŒ[ƒ€‚Å‰Ÿ‚³‚ê‚Ä‚¢‚½‚çAƒJƒEƒ“ƒg‚ği‚ß‚é
-		else left_count = 0;				//‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢‚È‚çAƒJƒEƒ“ƒg‚ğƒŠƒZƒbƒg
-		
+		if(left_press == true) left_count++;	//ãã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§æŠ¼ã•ã‚Œã¦ã„ãŸã‚‰ã€ã‚«ã‚¦ãƒ³ãƒˆã‚’é€²ã‚ã‚‹
+		else left_count = 0;				//æŠ¼ã•ã‚Œã¦ã„ãªã„ãªã‚‰ã€ã‚«ã‚¦ãƒ³ãƒˆã‚’ãƒªã‚»ãƒƒãƒˆ
+
 		if(right_press == true) right_count++;
 		else right_count = 0;
-		
-		update_point = set_point;	//ˆÊ’u‚ğXV
+
+		update_point = set_point;	//ä½ç½®ã‚’æ›´æ–°
 	}
-	
+
 	/**
-	*ƒ}ƒEƒX‚ª‰Ÿ‚³‚ê‚½‚Æ‚«AMouseListener‚ÉŒÄ‚Ño‚³‚ê‚éƒƒ\ƒbƒh
+	*ãƒã‚¦ã‚¹ãŒæŠ¼ã•ã‚ŒãŸã¨ãã€MouseListenerã«å‘¼ã³å‡ºã•ã‚Œã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
 	**/
 	public void mousePressed(MouseEvent e){
 		if(e.getButton() == MouseEvent.BUTTON1) left_press = true;
@@ -45,61 +45,61 @@ public class MouseFacade {
 	}
 
 	/**
-	*ƒ}ƒEƒX‚ª—£‚³‚ê‚½‚Æ‚«AMouseListener‚ÉŒÄ‚Ño‚³‚ê‚éƒƒ\ƒbƒh
+	*ãƒã‚¦ã‚¹ãŒé›¢ã•ã‚ŒãŸã¨ãã€MouseListenerã«å‘¼ã³å‡ºã•ã‚Œã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
 	**/
 	public void mouseReleased(){
 		left_press = false;
 		right_press = false;
 	}
-	
+
 	/**
-	*ƒ}ƒEƒX‚ª“®‚¢‚½‚Æ‚«AMouseMotionListener‚ÉŒÄ‚Ño‚³‚ê‚éƒƒ\ƒbƒh
+	*ãƒã‚¦ã‚¹ãŒå‹•ã„ãŸã¨ãã€MouseMotionListenerã«å‘¼ã³å‡ºã•ã‚Œã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
 	**/
 	public void mouseMoved(Point point){
-		set_point = point;	//‰¼‚É’l‚ğƒZƒbƒgiXV‚Íƒ^ƒCƒ}[ŒÄ‚Ño‚µj
+		set_point = point;	//ä»®ã«å€¤ã‚’ã‚»ãƒƒãƒˆï¼ˆæ›´æ–°ã¯ã‚¿ã‚¤ãƒãƒ¼å‘¼ã³å‡ºã—æ™‚ï¼‰
 		moved = true;
 	}
 
 	public boolean judgeMousePress(){
 		return (left_count > 0 || right_count > 0);
 	}
-	
+
 	public boolean judgeMouseMoved(){
 		return moved;
 	}
 	public void resetMouseMoved(){
 		moved = false;
 	}
-	
+
 	/**
-	*ƒ}ƒEƒX‚Ì¶ƒ{ƒ^ƒ“‚ª‰Ÿ“ü‚³‚ê‚Ä‚¢‚éƒtƒŒ[ƒ€”‚ğ•Ô‚·
+	*ãƒã‚¦ã‚¹ã®å·¦ãƒœã‚¿ãƒ³ãŒæŠ¼å…¥ã•ã‚Œã¦ã„ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚’è¿”ã™
 	**/
 	public int getMouseLeftPressCount(){
 		return left_count;
 	}
 	/**
-	*ƒ}ƒEƒX‚Ì‰Eƒ{ƒ^ƒ“‚ª‰Ÿ“ü‚³‚ê‚Ä‚¢‚éƒtƒŒ[ƒ€”‚ğ•Ô‚·
+	*ãƒã‚¦ã‚¹ã®å³ãƒœã‚¿ãƒ³ãŒæŠ¼å…¥ã•ã‚Œã¦ã„ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚’è¿”ã™
 	**/
 	public int getMouseRightPressCount(){
 		return right_count;
 	}
-	
+
 	/**
-	*ƒ}ƒEƒX‚ÌŒ»İx‚ğ•Ô‚·
+	*ãƒã‚¦ã‚¹ã®ç¾åœ¨xã‚’è¿”ã™
 	**/
 	public int getMouseX(){
 		return update_point.x;
 	}
-	
+
 	/**
-	*ƒ}ƒEƒX‚ÌŒ»İy‚ğ•Ô‚·
+	*ãƒã‚¦ã‚¹ã®ç¾åœ¨yã‚’è¿”ã™
 	**/
 	public int getMouseY(){
 		return update_point.y;
 	}
 
 	/**
-	*ƒ}ƒEƒX‚ÌŒ»İˆÊ’u‚ğ•Ô‚·
+	*ãƒã‚¦ã‚¹ã®ç¾åœ¨ä½ç½®ã‚’è¿”ã™
 	**/
 	public Point getMousePoint(){
 		return update_point;

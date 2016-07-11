@@ -1,29 +1,30 @@
 package system;
-import java.applet.*;
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.net.URL;
 import java.util.ArrayList;
 
 public class SoundMgr {
 	public enum SoundId{Test};
-		//ƒCƒ[ƒWƒIƒuƒWƒFƒNƒg‚ğ¯•Ê‚·‚éID
-	
-	//ƒCƒ[ƒWƒIƒuƒWƒFƒNƒg‚ÌŠÇ—ƒNƒ‰ƒX
-	private class SoundData{	//ƒCƒ[ƒWƒf[ƒ^
+		//ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ID
+
+	//ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç®¡ç†ã‚¯ãƒ©ã‚¹
+	private class SoundData{	//ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿
 		public final String pass;
-		public final SoundId id;		//ƒCƒ[ƒWID
-		public AudioClip ac;	//ƒCƒ[ƒWƒIƒuƒWƒFƒNƒg
-		
+		public final SoundId id;		//ã‚¤ãƒ¡ãƒ¼ã‚¸ID
+		public AudioClip ac;	//ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+
 		public SoundData(String pass, SoundId id){
-			//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+			//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			this.id = id;
 			this.pass = pass;
 		}
 	}
-	
-	//ƒVƒ“ƒOƒ‹ƒgƒ“ƒpƒ^[ƒ“‚Å‹Lq
-	private SoundMgr(){		
+
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã§è¨˜è¿°
+	private SoundMgr(){
 		snd_data.add(new SoundData("HeatCatch.wav", SoundId.Test));
-		
+
 		for(int i = 0; i < snd_data.size(); i++){
 			URL url = getClass().getResource(snd_data.get(i).pass);
 			if(snd_data.get(i).ac != null){
@@ -31,26 +32,26 @@ public class SoundMgr {
 			}
 		}
 	}
-	
-	private static SoundMgr instance = null;	//©g‚ÌƒCƒ“ƒXƒ^ƒ“ƒX(null‰Šú‰»
+
+	private static SoundMgr instance = null;	//è‡ªèº«ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹(nullåˆæœŸåŒ–
 	public static void loadSound(){
-		if(instance == null){	//img_mgr‚ªnull‚È‚çA
+		if(instance == null){	//img_mgrãŒnullãªã‚‰ã€
 			instance = new SoundMgr();
 		}
 	}
 	public static SoundMgr getInstance(){
-		return instance;	//ƒƒ“ƒo‚Å‚ ‚é©g‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ•Ô‚·
+		return instance;	//ãƒ¡ãƒ³ãƒã§ã‚ã‚‹è‡ªèº«ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’è¿”ã™
 	}
-	
+
 	private ArrayList<SoundData> snd_data = new ArrayList<SoundData>(0);
-	
+
 	public AudioClip getSoundToId(SoundId id){
 		for(SoundData data : snd_data){
 			if(data.id == id){
 				return data.ac;
 			}
 		}
-		
+
 		return null;
 	}
 }

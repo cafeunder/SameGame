@@ -1,5 +1,10 @@
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Insets;
+
+import javax.swing.JFrame;
+
 import mvcModule.Controller;
 import mvcModule.Viewer;
 import system.ImageMgr;
@@ -7,45 +12,45 @@ import system.SoundMgr;
 
 public class SameGame extends JFrame{
 	private static final long serialVersionUID = 1L;
-	
-	private static final int SIZE_X = 800;	//ƒAƒvƒŒƒbƒg‚ÌxƒTƒCƒY
-	private static final int SIZE_Y = 600;	//ƒAƒvƒŒƒbƒg‚ÌyƒTƒCƒY
-	
+
+	private static final int SIZE_X = 800;	//ã‚¢ãƒ—ãƒ¬ãƒƒãƒˆã®xã‚µã‚¤ã‚º
+	private static final int SIZE_Y = 600;	//ã‚¢ãƒ—ãƒ¬ãƒƒãƒˆã®yã‚µã‚¤ã‚º
+
 	public SameGame()
 	{
-		ImageMgr.loadImage(this);	//‰æ‘œƒtƒ@ƒCƒ‹‚ğƒ[ƒh
+		ImageMgr.loadImage(this);	//ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰
 		SoundMgr.loadSound();
-		
-		//ŠeƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‰Šú‰»
+
+		//å„ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®åˆæœŸåŒ–
 		Viewer view = new Viewer();
 		Controller controller = new Controller(view);
 		//
-		
-		//ƒTƒCƒY‚ğƒZƒbƒg
-		this.setVisible(true); //‰Â‹‰»
+
+		//ã‚µã‚¤ã‚ºã‚’ã‚»ãƒƒãƒˆ
+		this.setVisible(true); //å¯è¦–åŒ–
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			//ƒEƒBƒ“ƒhƒE‚ª•Â‚¶‚ç‚ê‚½‚çAƒvƒƒZƒXI—¹
-		this.setBackground(Color.BLACK); //ƒoƒbƒNƒOƒ‰ƒEƒ“ƒh‚ÌFİ’è
-		this.setResizable(false); //ƒTƒCƒY•ÏX‹Ö~
-		
-		Insets insets = this.getInsets(); //—˜—p‰Â”\—Ìˆæ‚ÌŒvZ‚Ég‚¤
+			//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒé–‰ã˜ã‚‰ã‚ŒãŸã‚‰ã€ãƒ—ãƒ­ã‚»ã‚¹çµ‚äº†
+		this.setBackground(Color.BLACK); //ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ã®è‰²è¨­å®š
+		this.setResizable(false); //ã‚µã‚¤ã‚ºå¤‰æ›´ç¦æ­¢
+
+		Insets insets = this.getInsets(); //åˆ©ç”¨å¯èƒ½é ˜åŸŸã®è¨ˆç®—ã«ä½¿ã†
 		this.setSize(SIZE_X+insets.right,SIZE_Y+insets.top);
 
-		controller.setSize(new Dimension(SIZE_X,SIZE_Y));		
+		controller.setSize(new Dimension(SIZE_X,SIZE_Y));
 		//
-		
-		//ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌƒZƒbƒg
-		Container cont = new Container(); //ƒRƒ“ƒeƒi‚ğ¶¬
-		
-		//ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğƒRƒ“ƒeƒi‚ÉƒZƒbƒg
+
+		//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ã‚»ãƒƒãƒˆ
+		Container cont = new Container(); //ã‚³ãƒ³ãƒ†ãƒŠã‚’ç”Ÿæˆ
+
+		//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ã‚³ãƒ³ãƒ†ãƒŠã«ã‚»ãƒƒãƒˆ
 		cont.add(controller);
 		cont.add(view);
 		this.setLocation(100, 100);
 		//
-		getContentPane().add(cont);	//ƒRƒ“ƒeƒi‚ğƒZƒbƒg
-		//		
+		getContentPane().add(cont);	//ã‚³ãƒ³ãƒ†ãƒŠã‚’ã‚»ãƒƒãƒˆ
+		//
 	}
-	
+
 	public static void main(String[] args){
 		new SameGame();
 	}

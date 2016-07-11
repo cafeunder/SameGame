@@ -9,7 +9,7 @@ public class GameViewerComponent extends ViewerComponent {
 		super(scfacade);
 		this.gModel = gModel;
 	}
-	
+
 	public void draw(){
 		this.gModel.draw();
 	}

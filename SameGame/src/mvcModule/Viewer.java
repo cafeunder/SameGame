@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+
 import javax.swing.JPanel;
 
 import system.DrawLibrary;
@@ -12,36 +13,36 @@ import system.FontMgr;
 
 public class Viewer extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private BufferedImage bf;	//ƒ_ƒuƒ‹ƒoƒbƒtƒ@ƒŠƒ“ƒO—pƒCƒ[ƒW
+	private BufferedImage bf;	//ãƒ€ãƒ–ãƒ«ãƒãƒƒãƒ•ã‚¡ãƒªãƒ³ã‚°ç”¨ã‚¤ãƒ¡ãƒ¼ã‚¸
 	private ViewerComponent viewComponent;
 
 	public Viewer(){
-		bf = new BufferedImage(800,600,BufferedImage.TYPE_INT_ARGB);	//ƒ_ƒuƒ‹ƒoƒbƒtƒ@‚Ì—Ìˆæ‚ğŠm•Û
-		
+		bf = new BufferedImage(800,600,BufferedImage.TYPE_INT_ARGB);	//ãƒ€ãƒ–ãƒ«ãƒãƒƒãƒ•ã‚¡ã®é ˜åŸŸã‚’ç¢ºä¿
+
 		setSize(new Dimension(800,600));
-		
-		DrawLibrary.init(this, (Graphics2D)bf.getGraphics());	//•`‰æƒ‰ƒCƒuƒ‰ƒŠ‚Ì‰Šú‰»
-		FontMgr.init();			//ƒtƒHƒ“ƒgƒf[ƒ^‚ğƒ[ƒh
+
+		DrawLibrary.init(this, (Graphics2D)bf.getGraphics());	//æç”»ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®åˆæœŸåŒ–
+		FontMgr.init();			//ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ãƒ­ãƒ¼ãƒ‰
 	}
 
     public void update(Graphics g){
-    	//ƒI[ƒo[ƒ‰ƒCƒh‚µ‚½JPanel‚Ìupdateƒƒ\ƒbƒh
+    	//ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã—ãŸJPanelã®updateãƒ¡ã‚½ãƒƒãƒ‰
     	paint(g);
     }
-    
+
 	public void paintComponent(Graphics g){
-		//•`‰æƒƒ\ƒbƒh
+		//æç”»ãƒ¡ã‚½ãƒƒãƒ‰
 		Graphics bg = bf.getGraphics();
-		
-		//”wŒi‚Ì•`‰æ
+
+		//èƒŒæ™¯ã®æç”»
 		bg.setColor(Color.BLACK);
 		bg.fillRect(0, 0, 800, 600);
 		//
-		
-		//‚±‚±‚É–{‘Ì‚ğ‘‚­
+
+		//ã“ã“ã«æœ¬ä½“ã‚’æ›¸ã
 		viewComponent.draw();
 		//
-		
+
 		g.drawImage(bf, 0, 0, this);
 	}
 

@@ -6,6 +6,6 @@ public abstract class Model{
 	public Model(Controller.SceneChangeFacade scfacade){
 		this.scfacade = scfacade;
 	}
-	
+
 	public abstract void update();
 }

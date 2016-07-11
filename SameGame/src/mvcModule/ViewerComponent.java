@@ -6,6 +6,6 @@ public abstract class ViewerComponent {
 	public ViewerComponent(Controller.SceneChangeFacade scfacade){
 		this.scfacade = scfacade;
 	}
-	
+
 	public abstract void draw();
 }

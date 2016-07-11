@@ -21,13 +21,13 @@ public class StageStart extends GameProcess {
 		}
 		return null;
 	}
-	
+
 	public void draw(){
 		map.draw();
 
 		DrawLibrary dLib = DrawLibrary.getInstance();
 		dLib.fillRect(0, 0, 800, 600, new Color(255,255,255,128));
-		dLib.drawString(200, 240, "ÉXÉeÅ[ÉWÉXÉ^Å[ÉgÅI", new Color(0,0,0), FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
-		dLib.drawString(200, 270, "ÉNÉäÉbÉNÇµÇƒÇÀ", new Color(0,0,0), FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
+		dLib.drawString(200, 240, "„Çπ„ÉÜ„Éº„Ç∏„Çπ„Çø„Éº„ÉàÔºÅ", new Color(0,0,0), FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
+		dLib.drawString(200, 270, "„ÇØ„É™„ÉÉ„ÇØ„Åó„Å¶„Å≠", new Color(0,0,0), FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
 	}
 }

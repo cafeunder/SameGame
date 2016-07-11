@@ -1,19 +1,20 @@
 package gameOver;
 
 import java.awt.Color;
-import system.DrawLibrary;
-import system.FontMgr;
+
 import mvcModule.Controller;
 import mvcModule.ViewerComponent;
+import system.DrawLibrary;
+import system.FontMgr;
 
 public class GameOverViewerComponent extends ViewerComponent{
 	public GameOverViewerComponent(Controller.SceneChangeFacade scfacade){
 		super(scfacade);
 	}
-	
+
 	public void draw(){
 		DrawLibrary drawlib = DrawLibrary.getInstance();
-		drawlib.drawString(200, 240, "ゲームオーバー画面", Color.WHITE, FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
-		drawlib.drawString(200, 280, "クリックでタイトルへ", Color.WHITE, FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
+		drawlib.drawString(200, 240, "繧ｲ繝ｼ繝繧ｪ繝ｼ繝舌�ｼ逕ｻ髱｢", Color.WHITE, FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
+		drawlib.drawString(200, 280, "繧ｯ繝ｪ繝�繧ｯ縺ｧ繧ｿ繧､繝医Ν縺ｸ", Color.WHITE, FontMgr.getInstance().getFontToId(FontMgr.FontId.POPMENU), true);
 	}
 }

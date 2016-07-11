@@ -1,25 +1,25 @@
 package mvcModule;
 
-import title.TitleModel;
-import title.TitleViewerComponent;
 import game.GameModel;
 import game.GameViewerComponent;
 import gameOver.GameOverModel;
 import gameOver.GameOverViewerComponent;
+import title.TitleModel;
+import title.TitleViewerComponent;
 
 public class SceneFactory {
 	public enum SCENE_ID{GAME, TITLE, GAMEOVER}; // GAMECLEAR};
-	
+
 	public static class SceneData{
 		public Model model;
 		public ViewerComponent view;
-		
+
 		public SceneData(Model model, ViewerComponent view){
 			this.model = model;
 			this.view = view;
 		}
 	}
-	
+
 	public static SceneData getSceneData(Controller.SceneChangeFacade scfacade, SCENE_ID id, int stage_num){
 		switch(id){
 		case GAME:
@@ -33,7 +33,7 @@ public class SceneFactory {
 		case GAMEOVER:
 			GameOverModel gomodel = new GameOverModel(scfacade);
 			GameOverViewerComponent goview = new GameOverViewerComponent(scfacade);
-			return new SceneData(gomodel,goview);			
+			return new SceneData(gomodel,goview);
 		}
 		return null;
 	}

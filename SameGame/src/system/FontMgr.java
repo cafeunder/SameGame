@@ -4,78 +4,78 @@ import java.awt.Font;
 import java.util.ArrayList;
 
 /*
-	ƒtƒHƒ“ƒgƒf[ƒ^‚ğŠÇ—‚·‚éƒ}ƒl[ƒWƒƒƒNƒ‰ƒX
+	ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ç®¡ç†ã™ã‚‹ãƒãƒãƒ¼ã‚¸ãƒ£ã‚¯ãƒ©ã‚¹
  */
-public class FontMgr {	
+public class FontMgr {
 	public enum FontId{ POPMENU, COMMENT, INFOMATION, OPERATE_BUTTON, MYSTATE};
-		//ƒtƒHƒ“ƒgƒf[ƒ^ƒIƒuƒWƒFƒNƒg‚ğ¯•Ê‚·‚éID
-	
+		//ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ID
+
 	private class FontData{
-		//ƒtƒHƒ“ƒgƒf[ƒ^
-		public final FontId id;		//ƒtƒHƒ“ƒgID	
-		public Font font;	//ƒtƒHƒ“ƒgƒIƒuƒWƒFƒNƒg
-		
+		//ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿
+		public final FontId id;		//ãƒ•ã‚©ãƒ³ãƒˆID
+		public Font font;	//ãƒ•ã‚©ãƒ³ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+
 		public FontData(Font font, FontId id){
 			this.id = id;
 			this.font = font;
 		}
 	}
-		
-	//ƒVƒ“ƒOƒ‹ƒgƒ“ƒpƒ^[ƒ“‚Å‹Lq
+
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã§è¨˜è¿°
 	private FontMgr(){
-		font_data.add(new FontData(new Font("ƒƒCƒŠƒI",Font.BOLD,25),FontId.POPMENU));
-		font_data.add(new FontData(new Font("‚l‚r ƒSƒVƒbƒN",Font.PLAIN,14),FontId.COMMENT));
-		font_data.add(new FontData(new Font("‚l‚r ƒSƒVƒbƒN",Font.PLAIN,16),FontId.INFOMATION));
-		font_data.add(new FontData(new Font("‚l‚r ƒSƒVƒbƒN",Font.PLAIN,20),FontId.OPERATE_BUTTON));
-		font_data.add(new FontData(new Font("ƒƒCƒŠƒI",Font.PLAIN,14),FontId.MYSTATE));
+		font_data.add(new FontData(new Font("ãƒ¡ã‚¤ãƒªã‚ª",Font.BOLD,25),FontId.POPMENU));
+		font_data.add(new FontData(new Font("ï¼­ï¼³ ã‚´ã‚·ãƒƒã‚¯",Font.PLAIN,14),FontId.COMMENT));
+		font_data.add(new FontData(new Font("ï¼­ï¼³ ã‚´ã‚·ãƒƒã‚¯",Font.PLAIN,16),FontId.INFOMATION));
+		font_data.add(new FontData(new Font("ï¼­ï¼³ ã‚´ã‚·ãƒƒã‚¯",Font.PLAIN,20),FontId.OPERATE_BUTTON));
+		font_data.add(new FontData(new Font("ãƒ¡ã‚¤ãƒªã‚ª",Font.PLAIN,14),FontId.MYSTATE));
 	}
-	
-	private static FontMgr instance = null;	//©g‚ÌƒCƒ“ƒXƒ^ƒ“ƒX(null‰Šú‰»
+
+	private static FontMgr instance = null;	//è‡ªèº«ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹(nullåˆæœŸåŒ–
 	public static void init(){
-		//ƒCƒ“ƒXƒ^ƒ“ƒXì¬ŠÖ”
-		if(instance == null){	//img_mgr‚ªnull‚È‚çA
+		//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ä½œæˆé–¢æ•°
+		if(instance == null){	//img_mgrãŒnullãªã‚‰ã€
 			instance = new FontMgr();
 		}
 	}
 	public static FontMgr getInstance(){
-		return instance;	//ƒƒ“ƒo‚Å‚ ‚é©g‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ•Ô‚·
+		return instance;	//ãƒ¡ãƒ³ãƒã§ã‚ã‚‹è‡ªèº«ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’è¿”ã™
 	}
 
 
-	
-	private ArrayList<FontData> font_data = new ArrayList<FontData>(0);	//ƒtƒHƒ“ƒgƒf[ƒ^ƒŠƒXƒg
+
+	private ArrayList<FontData> font_data = new ArrayList<FontData>(0);	//ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ãƒªã‚¹ãƒˆ
 	public Font getFontToId(FontId fontid){
-		//ID‚Éƒ}ƒbƒ`‚·‚éƒtƒHƒ“ƒgƒIƒuƒWƒFƒNƒg‚ğ•Ô‚·‚ğƒƒ\ƒbƒh
+		//IDã«ãƒãƒƒãƒã™ã‚‹ãƒ•ã‚©ãƒ³ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¿”ã™ã‚’ãƒ¡ã‚½ãƒƒãƒ‰
 		for(FontData data : font_data){
 			if(data.id == fontid){
 				return data.font;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public static String integerToZenkakuString(int integer) {
 		String str = Integer.toString(integer);
 		StringBuffer sb = new StringBuffer(str);
 		for (int i = 0; i < str.length(); i++) {
 			char c = str.charAt(i);
 			if (c >= '0' && c <= '9') {
-				sb.setCharAt(i, (char) (c - '0' + '‚O'));
+				sb.setCharAt(i, (char) (c - '0' + 'ï¼'));
 			}
 		}
 		return sb.toString();
 	}
-	
+
 	public static String floatToZenkakuString(float integer) {
 		String str = Float.toString(integer);
 		StringBuffer sb = new StringBuffer(str);
 		for (int i = 0; i < str.length(); i++) {
 			char c = str.charAt(i);
 			if (c >= '0' && c <= '9') {
-				sb.setCharAt(i, (char) (c - '0' + '‚O'));
+				sb.setCharAt(i, (char) (c - '0' + 'ï¼'));
 			}
 		}
 		return sb.toString();
-	}	
+	}
 }

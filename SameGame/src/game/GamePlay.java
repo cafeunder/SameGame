@@ -21,11 +21,11 @@ public class GamePlay extends GameProcess{
 		default:
 			break;
 		}
-		
+
 		return null;
 	}
-	
+
 	public void draw(){
 		this.map.draw();
-	}	
+	}
 }

@@ -14,90 +14,90 @@ import mvcModule.SceneFactory.SceneData;
 import system.MouseFacade;
 
 /*
-	ƒRƒ“ƒgƒ[ƒ‰[‚ğ•\Œ»‚·‚éƒNƒ‰ƒX
+	ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚’è¡¨ç¾ã™ã‚‹ã‚¯ãƒ©ã‚¹
  */
 public class Controller extends Component implements ActionListener, MouseListener, MouseMotionListener
 {
 	public class SceneChangeFacade {
 		private Controller controller;
-		
+
 		public SceneChangeFacade(Controller controller){
 			this.controller = controller;
 		}
-		
+
 		public void sceneChange(SceneFactory.SCENE_ID id){
 			controller.sceneChange(id);
 		}
 		public void sceneChange(SceneFactory.SCENE_ID id, int stage_num){
 			controller.sceneChange(id,stage_num);
 		}
-	}	
-	
+	}
+
 	private static final long serialVersionUID = 1L;
 
-	private Model model;	//ƒ‚ƒfƒ‹
-	private Viewer view;	//ƒrƒ…[
-	
-	private Timer timer;		//ƒ^ƒCƒ}[
-	
+	private Model model;	//ãƒ¢ãƒ‡ãƒ«
+	private Viewer view;	//ãƒ“ãƒ¥ãƒ¼
+
+	private Timer timer;		//ã‚¿ã‚¤ãƒãƒ¼
+
 	public Controller(Viewer view){
-		//Šeƒ‚ƒWƒ…[ƒ‹‚ÌƒCƒ“ƒXƒ^ƒ“ƒXì¬
+		//å„ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ä½œæˆ
 		mfacade = new MouseFacade();
 		this.view = view;
-		
+
 		sceneChange(SceneFactory.SCENE_ID.TITLE);
-		
-		//ƒ}ƒEƒXƒŠƒXƒi[‚Ì‰Šú‰»
+
+		//ãƒã‚¦ã‚¹ãƒªã‚¹ãƒŠãƒ¼ã®åˆæœŸåŒ–
 		addMouseListener(this);
-		addMouseMotionListener(this);		
-		
-		timer = new Timer(17,this);	//ƒ^ƒCƒ}[ƒZƒbƒg
-		timer.start();				//ƒ^ƒCƒ}[ƒXƒ^[ƒg
+		addMouseMotionListener(this);
+
+		timer = new Timer(17,this);	//ã‚¿ã‚¤ãƒãƒ¼ã‚»ãƒƒãƒˆ
+		timer.start();				//ã‚¿ã‚¤ãƒãƒ¼ã‚¹ã‚¿ãƒ¼ãƒˆ
 
 		rand = new Random();
 	}
-	
-	static private MouseFacade mfacade;//ƒ}ƒEƒXƒtƒ@ƒT[ƒh
+
+	static private MouseFacade mfacade;//ãƒã‚¦ã‚¹ãƒ•ã‚¡ã‚µãƒ¼ãƒ‰
 	static public MouseFacade getMouseFacade(){
 		return mfacade;
 	}
-	
+
 	static private Random rand;
 	static public int getRand(int max){
 		return rand.nextInt(max);
 	}
-	
+
 	public void mousePressed(MouseEvent e){
-		mfacade.mousePressed(e); //ƒ}ƒEƒXƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚«
+		mfacade.mousePressed(e); //ãƒã‚¦ã‚¹ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸã¨ã
 	}
 	public void mouseReleased(MouseEvent e){
-		mfacade.mouseReleased();//ƒ}ƒEƒXƒ{ƒ^ƒ“‚ª—£‚³‚ê‚½‚Æ‚«
+		mfacade.mouseReleased();//ãƒã‚¦ã‚¹ãƒœã‚¿ãƒ³ãŒé›¢ã•ã‚ŒãŸã¨ã
 	}
 	public void mouseMoved(MouseEvent e){
-		mfacade.mouseMoved(e.getPoint());//ƒ}ƒEƒX‚ª“®‚¢‚½‚Æ‚«
+		mfacade.mouseMoved(e.getPoint());//ãƒã‚¦ã‚¹ãŒå‹•ã„ãŸã¨ã
 	}
 
-	public void actionPerformed(ActionEvent e){	//ƒ^ƒCƒ}[‚É‚æ‚Á‚ÄŒÄ‚Ño‚³‚ê‚éXVƒƒ\ƒbƒh
-		mfacade.update();	//ƒ}ƒEƒXƒtƒ@ƒT[ƒh‚ÌXV
-		model.update();//ƒ‚ƒfƒ‹‚ÌXV		
-		view.repaint();	//ƒ^ƒCƒ}[‚É‚æ‚é•`‰æ
+	public void actionPerformed(ActionEvent e){	//ã‚¿ã‚¤ãƒãƒ¼ã«ã‚ˆã£ã¦å‘¼ã³å‡ºã•ã‚Œã‚‹æ›´æ–°ãƒ¡ã‚½ãƒƒãƒ‰
+		mfacade.update();	//ãƒã‚¦ã‚¹ãƒ•ã‚¡ã‚µãƒ¼ãƒ‰ã®æ›´æ–°
+		model.update();//ãƒ¢ãƒ‡ãƒ«ã®æ›´æ–°
+		view.repaint();	//ã‚¿ã‚¤ãƒãƒ¼ã«ã‚ˆã‚‹æç”»
 	}
-	
+
 	public void sceneChange(SceneFactory.SCENE_ID id){
 		SceneData scene = SceneFactory.getSceneData(new SceneChangeFacade(this), id, 0);
-		
+
 		this.model = scene.model;
 		view.setComponent(scene.view);
 	}
 	public void sceneChange(SceneFactory.SCENE_ID id, int stage_num){
 		SceneData scene = SceneFactory.getSceneData(new SceneChangeFacade(this), id, stage_num);
-		
+
 		this.model = scene.model;
 		view.setComponent(scene.view);
 	}
-	
-	public void mouseClicked(MouseEvent e){}  // ƒ}ƒEƒXƒ{ƒ^ƒ“‚ª’ZŠÔ‚Å‰Ÿ‚µ‚Ä—£‚³‚ê‚½‚Æ‚«
-	public void mouseEntered(MouseEvent e){}  // ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ªGUI•”•i“à‚É“ü‚Á‚½‚Æ‚«
-	public void mouseExited(MouseEvent e){}   // ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ªGUI•”•iŠO‚Éo‚½‚Æ‚«
-	public void mouseDragged(MouseEvent e){} // ƒ}ƒEƒX‚ªƒhƒ‰ƒbƒO‚³‚ê‚½‚Æ‚«
+
+	public void mouseClicked(MouseEvent e){}  // ãƒã‚¦ã‚¹ãƒœã‚¿ãƒ³ãŒçŸ­æ™‚é–“ã§æŠ¼ã—ã¦é›¢ã•ã‚ŒãŸã¨ã
+	public void mouseEntered(MouseEvent e){}  // ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ãŒGUIéƒ¨å“å†…ã«å…¥ã£ãŸã¨ã
+	public void mouseExited(MouseEvent e){}   // ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ãŒGUIéƒ¨å“å¤–ã«å‡ºãŸã¨ã
+	public void mouseDragged(MouseEvent e){} // ãƒã‚¦ã‚¹ãŒãƒ‰ãƒ©ãƒƒã‚°ã•ã‚ŒãŸã¨ã
 }

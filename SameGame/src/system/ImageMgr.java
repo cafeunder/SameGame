@@ -10,32 +10,32 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 /*
-	ƒCƒ[ƒWƒf[ƒ^‚ğŠÇ—‚·‚éƒ}ƒl[ƒWƒƒƒNƒ‰ƒX
+	ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã‚’ç®¡ç†ã™ã‚‹ãƒãƒãƒ¼ã‚¸ãƒ£ã‚¯ãƒ©ã‚¹
 */
-public class ImageMgr {	
+public class ImageMgr {
 	public enum ImgId{
 		TIP_RED, TIP_GREEN, TIP_BLUE, TIP_YELLOW, TIP_CYAN, TIP_VIOLET
 	};
-		//ƒCƒ[ƒWƒIƒuƒWƒFƒNƒg‚ğ¯•Ê‚·‚éID
-	
-	//ƒCƒ[ƒWƒIƒuƒWƒFƒNƒg‚ÌŠÇ—ƒNƒ‰ƒX
-	private class ImageData{	//ƒCƒ[ƒWƒf[ƒ^
+		//ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è­˜åˆ¥ã™ã‚‹ID
+
+	//ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç®¡ç†ã‚¯ãƒ©ã‚¹
+	private class ImageData{	//ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿
 		public final String pass;
-		public final ImgId id;		//ƒCƒ[ƒWID
-		public Image img;	//ƒCƒ[ƒWƒIƒuƒWƒFƒNƒg
-		
+		public final ImgId id;		//ã‚¤ãƒ¡ãƒ¼ã‚¸ID
+		public Image img;	//ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+
 		public ImageData(String pass, ImgId id){
-			//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+			//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 			this.id = id;
 			this.pass = pass;
 		}
 	}
-	
-	//ƒVƒ“ƒOƒ‹ƒgƒ“ƒpƒ^[ƒ“‚Å‹Lq
+
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã§è¨˜è¿°
 	private ImageMgr(JFrame jap){
 		this.jap = jap;
-		
-		//ƒCƒ[ƒWƒ\[ƒX‚Ö‚ÌƒpƒX‚ğ‘ã“ü
+
+		//ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚½ãƒ¼ã‚¹ã¸ã®ãƒ‘ã‚¹ã‚’ä»£å…¥
 		img_data.add(new ImageData("img/TEMP_RED.png",ImgId.TIP_RED));
 		img_data.add(new ImageData("img/TEMP_GREEN.png",ImgId.TIP_GREEN));
 		img_data.add(new ImageData("img/TEMP_BLUE.png",ImgId.TIP_BLUE));
@@ -43,8 +43,8 @@ public class ImageMgr {
 		img_data.add(new ImageData("img/TEMP_CYAN.png",ImgId.TIP_CYAN));
 		img_data.add(new ImageData("img/TEMP_VIOLET.png",ImgId.TIP_VIOLET));
 
-		MediaTracker tracker = new MediaTracker(jap);	//ƒƒfƒBƒAƒgƒ‰ƒbƒJ[
-		
+		MediaTracker tracker = new MediaTracker(jap);	//ãƒ¡ãƒ‡ã‚£ã‚¢ãƒˆãƒ©ãƒƒã‚«ãƒ¼
+
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		int i = 1;
 		for(ImageData data : img_data){
@@ -53,62 +53,62 @@ public class ImageMgr {
 
 			i++;
 		}
-		
+
 	    try {
 	    	tracker.waitForAll();
 	    } catch (InterruptedException e) {}
 	}
-	
-	private static ImageMgr instance = null;	//©g‚ÌƒCƒ“ƒXƒ^ƒ“ƒX(null‰Šú‰»
-		//static‚ÅƒCƒ“ƒXƒ^ƒ“ƒX‚ğì‚ç‚È‚¢‚Ì‚ÍAƒgƒ‰ƒbƒJ[‚ğó‚¯æ‚é•K—v‚ª‚ ‚é‚½‚ß
+
+	private static ImageMgr instance = null;	//è‡ªèº«ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹(nullåˆæœŸåŒ–
+		//staticã§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä½œã‚‰ãªã„ã®ã¯ã€ãƒˆãƒ©ãƒƒã‚«ãƒ¼ã‚’å—ã‘å–ã‚‹å¿…è¦ãŒã‚ã‚‹ãŸã‚
 	public static void loadImage(JFrame jap){
-		//ƒCƒ“ƒXƒ^ƒ“ƒXì¬ŠÖ”
-		
-		if(instance == null){	//img_mgr‚ªnull‚È‚çA
+		//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ä½œæˆé–¢æ•°
+
+		if(instance == null){	//img_mgrãŒnullãªã‚‰ã€
 			instance = new ImageMgr(jap);
-				//ƒgƒ‰ƒbƒJ[‚ğ—^‚¦‚ÄƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+				//ãƒˆãƒ©ãƒƒã‚«ãƒ¼ã‚’ä¸ãˆã¦ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 		}
 	}
 	public static ImageMgr getInstance(){
-		return instance;	//ƒƒ“ƒo‚Å‚ ‚é©g‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ•Ô‚·
+		return instance;	//ãƒ¡ãƒ³ãƒã§ã‚ã‚‹è‡ªèº«ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’è¿”ã™
 	}
-	
+
 	private JFrame jap;
 	private ArrayList<ImageData> img_data = new ArrayList<ImageData>(0);
-	
+
 	public Image getImageToId(ImgId imgid){
 		for(ImageData data : img_data){
 			if(data.id == imgid){
 				return data.img;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
-	* ‰æ‘œ‚ğ•ªŠ„‚µ‚Ä”z—ñ‚ÖƒZƒbƒg‚·‚éƒƒ\ƒbƒh
-	* @param img ImageƒIƒuƒWƒFƒNƒg
-	* @param x_num x•ªŠ„”
-	* @param y_num y•ªŠ„”
-	* @param width •ªŠ„ƒCƒ[ƒW‚Ì‰¡•
-	* @param height •ªŠ„ƒCƒ[ƒW‚Ìc•
+	* ç”»åƒã‚’åˆ†å‰²ã—ã¦é…åˆ—ã¸ã‚»ãƒƒãƒˆã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
+	* @param img Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	* @param x_num xåˆ†å‰²æ•°
+	* @param y_num yåˆ†å‰²æ•°
+	* @param width åˆ†å‰²ã‚¤ãƒ¡ãƒ¼ã‚¸ã®æ¨ªå¹…
+	* @param height åˆ†å‰²ã‚¤ãƒ¡ãƒ¼ã‚¸ã®ç¸¦å¹…
 	**/
 	public Image[] getDivImage(Image img, int x_num, int y_num, int width, int height){
 		Image[] divimg = new Image[x_num*y_num];
-			//ƒCƒ[ƒW”z—ñ‚ğ¶¬
+			//ã‚¤ãƒ¡ãƒ¼ã‚¸é…åˆ—ã‚’ç”Ÿæˆ
 
 		for(int x = 0; x < x_num; x++){
 			for(int y = 0; y < y_num; y++){
 				CropImageFilter cfilter = new CropImageFilter(x*width, y*height, width, height);
-					//Ø‚èæ‚èi=crop)ƒtƒBƒ‹ƒ^[‚ğ¶¬
+					//åˆ‡ã‚Šå–ã‚Šï¼ˆ=crop)ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼ã‚’ç”Ÿæˆ
 				FilteredImageSource producer = new FilteredImageSource(img.getSource(),cfilter);
-					//ƒtƒBƒ‹ƒ^ƒCƒ[ƒW‚Ìƒvƒƒfƒ…[ƒT[‚ğ¶¬
+					//ãƒ•ã‚£ãƒ«ã‚¿ã‚¤ãƒ¡ãƒ¼ã‚¸ã®ãƒ—ãƒ­ãƒ‡ãƒ¥ãƒ¼ã‚µãƒ¼ã‚’ç”Ÿæˆ
 				divimg[y + y_num*x] = jap.createImage(producer);
-					//ƒvƒƒfƒ…[ƒT[‚É]‚Á‚ÄV‚µ‚¢ƒCƒ[ƒW‚ğ¶¬A”z—ñ‚ÖƒZƒbƒg
+					//ãƒ—ãƒ­ãƒ‡ãƒ¥ãƒ¼ã‚µãƒ¼ã«å¾“ã£ã¦æ–°ã—ã„ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’ç”Ÿæˆã€é…åˆ—ã¸ã‚»ãƒƒãƒˆ
 			}
 		}
-		
+
 		return divimg;
 	}
 }
